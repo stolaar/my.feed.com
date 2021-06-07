@@ -1,0 +1,1 @@
+SELECT * FROM users WHERE podcast_username = $1

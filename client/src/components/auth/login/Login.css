@@ -1,0 +1,21 @@
+.login-btn {
+    width: 136px;
+    height: 54px;
+    border-radius: 33px;
+    background-color: #020083 !important;
+    margin: auto;
+}
+
+.login-btn-text {
+    width: 102px;
+    height: 29px;
+    font-family: 'Cormorant', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: 0.29px;
+    text-align: center;
+    color: #ffffff;
+}

@@ -1,0 +1,118 @@
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+html, body{
+    overflow-x: hidden;
+}
+
+
+/* ----------------------------------------END GRAPH STYLING-------------------------------- */
+.stop1 { stop-color:rgb(36,255,240);stop-opacity:1 }
+.stop2 { stop-color:rgb(0,128,128);stop-opacity:1 }
+
+.responsive-chart-container {
+  max-width: 90vw;
+  width: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.tick text {
+  font-size: 1.3em;
+  fill: gray;
+  font-weight: 800;
+  opacity: 0.8;
+  font-family: 'Lato', sans-serif;
+  letter-spacing: 1px;
+}
+
+.Axis-Left path {
+  d: path("M 0 470 V 50");
+}
+
+.Axis .domain {
+  stroke: gray;
+  stroke-opacity: 0.7;
+}
+
+@media all and (max-width: 786px) {
+  .responsive-chart-container {
+    max-width: 100vw;
+  }
+}
+
+.activeOption{
+    color: #55CBF3;
+}
+
+/* ----------------------------------------END GRAPH STYLING-------------------------------- */
+.btn:focus{
+    box-shadow: none;
+}
+
+/* INPUTS */
+.form-control:focus{
+    border-color: #55CBF3;
+    box-shadow: none;
+}
+
+textarea:focus {
+    outline: none !important;
+    border-color: #55CBF3;
+
+}
+
+/* ICONS */
+.fa-question-circle{
+    position: absolute;
+    top: 60%;
+    left: 86%;
+    font-size: 14px;
+    color: #55CBF3;
+    cursor: pointer;
+}
+
+/* PODCAST FORM 2 */
+.fa-instagram-square,
+.fa-twitter-square,
+.fa-facebook-square{
+    color: #CAD7FB;
+}
+.mri-15 {
+    margin-right: 15px;
+}
+
+.fa-plus-circle{
+    position: absolute;
+    color: #55CBF3;
+    top: 62%;
+    left: 77%;
+    cursor: pointer;
+}
+
+/* PODCAST FORM 3 */
+
+.fa-search{
+    top: 45%;
+    right: 12%; 
+}
+
+.fa-microphone{
+    top: 45%;
+    right: 5%; 
+}
+
+.fa-microphone, .fa-search{
+    color: #757575;
+    cursor: pointer;
+    position: absolute;
+}
+
+.fa-info-circle{
+    color: #55CBF3;
+    margin-right: 10px;
+}
+

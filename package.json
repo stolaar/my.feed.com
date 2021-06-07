@@ -1,0 +1,47 @@
+{
+  "name": "dashboard",
+  "version": "1.0.0",
+  "description": "Dashboard",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm run start --prefix client",
+    "server": "nodemon server.js",
+    "dev": "env-cmd -f development.env concurrently \"npm run server\" \"npm run client\" ",
+    "install-dependencies": "npm install && cd client/ && npm install"
+  },
+  "author": "Aleksandar Stolic",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "aws-sdk": "^2.891.0",
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "env-cmd": "^10.1.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "lodash.isempty": "^4.4.0",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "node-time-uuid": "^0.1.5",
+    "nodemailer": "^6.4.17",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "path": "^0.12.7",
+    "pg-promise": "^10.9.2",
+    "postgres-migrations": "^5.1.1",
+    "validator": "^13.5.2",
+    "winston": "^3.3.3",
+    "winston-mail": "^2.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "dotenv": "^8.6.0",
+    "nodemon": "^2.0.7"
+  }
+}

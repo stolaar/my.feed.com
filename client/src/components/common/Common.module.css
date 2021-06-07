@@ -1,0 +1,116 @@
+.titleForm {
+    margin: 18px 0px 25px 0px; 
+    color: #2E384D;
+    font-weight: normal;
+    font-size: 44px;
+    font-family: 'Roboto-Regular';
+}
+
+.formLabel {
+    display: block;
+    margin-bottom: 10px;
+    color: #8C98A9;
+    font-size: 18px;
+    font-family: 'Roboto-Regular';
+}
+
+.formLabelBonusContentDesc {
+    margin-top: 10px;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-family: 'Roboto-Regular';
+}
+
+/* INPUTS */
+.inputTextarea {
+    display: block;
+    margin-bottom: 30px;
+    border: 1px solid #E0E7FF;
+    border-radius: 5px;
+    color: #8C98A9;
+    resize: none;
+    width: 100%;
+    font-family: 'Roboto-Regular';
+    padding: 15px 0 0 16px;
+    
+}
+
+.inputTextarea:focus {
+    /* border-color: #55CBF3; */
+    border: 1px solid #55CBF3;
+}
+
+
+.inputOne {
+    display: block;
+    margin-bottom: 30px;
+    border: 1px solid #E0E7FF;
+    border-radius: 5px;   
+    height: 67px; 
+    font-family: 'Roboto-Regular';
+}
+
+
+.selectorOne {
+    display: block;
+    margin-bottom: 30px;
+    border: 1px solid #E0E7FF;
+    border-radius: 5px;
+    height: 67px;
+    color: #8C98A9;
+    font-family: 'Roboto-Regular';
+}
+
+.mainDivInput{
+    position: relative;
+}
+
+.inputTwo {
+    width: 100%;
+    display: block;
+    height: 73px;
+    margin-bottom: 40px;
+    border: 1px solid #E0E7FF;
+    border-radius: 5px;
+    font-family: 'Roboto-Regular';
+}
+
+.selectorTwo {
+    width: 100%;
+    display: block;
+    margin-bottom: 30px;
+    border: 1px solid #E0E7FF;
+    border-radius: 5px;
+    height: 73px;
+    color: #8C98A9;
+    font-family: 'Roboto-Regular';
+}
+
+/* BUTTONS */
+.submitBtn {
+    background: #55CBF3; 
+    color: white; 
+    width: 100%;
+    padding: 15px 0px;
+    font-size: 24px;
+    font-family: 'Roboto-Medium';
+}
+
+.submitBtnTwo {
+    background: #55CBF3; 
+    color: #FFFFFF; 
+    height: 66px;
+    width: 216px;
+    font-family: 'Roboto-Medium';
+}
+
+.customBtn {
+    background: #F0F3FF; 
+    color: #000000; 
+    box-shadow: 0px 0px 20px #7D7D7D1F;
+    height: 66px;
+    width: 216px;
+    font-weight: bold;
+    font-family: 'Roboto-Medium';
+}

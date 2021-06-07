@@ -1,0 +1,97 @@
+.landingPage {
+    padding-bottom:150px;
+    margin-top: 50px; 
+}
+
+.divHome{
+    margin-left: 15px;
+}
+
+.colText{
+    margin-top: 100px;
+}
+
+.divTitle{
+    font-size: 47px;
+    font-family: 'Roboto-Regular';
+    color: #2F2F2F;
+}
+
+.divP {
+    font-size: 18px;
+    color: #7D7D7D;
+    font-family: 'Roboto-Regular';
+    margin-bottom: 36px;
+}
+
+.divP p{
+    margin-bottom: 0px;
+}
+
+.homeButtons{
+    margin-bottom: 37px;
+    /* padding: 2px 0; */
+}
+
+.submitBtn {
+    width: 278px;
+    background: #55CBF3; 
+    color: white; 
+    padding: 15px 33px;
+    font-size: 19px;
+    font-family: 'Roboto-Medium';
+    margin-right: 33px;
+    border: none;
+}
+
+.signInGoogle{
+    width: 278px;
+    box-shadow: 0px 1px 30px #00000014;
+    border-radius: 5px;
+    color: #757575;
+    font-size: 19px;
+    font-family: 'Roboto-Medium';
+    border: none;
+    background-color: #fff;
+    padding: 15px 33px;
+
+}
+
+.googleIcon img{
+    width: 28px;
+    height: 28px;
+    margin: 0 20px 0 10px;
+}
+
+
+.landingIcons img {
+    height: 35px;
+    width: 35px;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+
+.BackgroundImage{
+    margin-top: 100px;
+    width: 100%;
+    height: auto;
+}
+
+@media only screen and (min-width: 991px) and (max-width: 1562px){
+    .submitBtn{
+        margin-bottom: 15px;
+    }
+} 
+
+@media only screen and (max-width: 680px){
+    .submitBtn{
+        margin-bottom: 15px;
+    }
+}
+
+@media only screen and (max-width: 1050px){
+    .BackgroundImage{
+        display: none;
+    }
+}

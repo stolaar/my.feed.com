@@ -1,0 +1,73 @@
+.divHome{
+    margin-left: 15px;
+}
+
+.colText{
+    margin-top: 100px;
+}
+
+.divTitle{
+    font-size: 47px;
+    font-family: 'Roboto-Regular';
+    color: #2F2F2F;
+}
+
+.divP {
+    font-size: 18px;
+    color: #7D7D7D;
+    font-family: 'Roboto-Regular';
+    margin-bottom: 36px;
+}
+
+.divP p{
+    margin-bottom: 0px;
+}
+
+.homeButtons{
+    margin-bottom: 37px;
+}
+
+.submitBtnH {
+    background: #55CBF3; 
+    color: white; 
+    padding: 13px 62px;
+    font-size: 19px;
+    font-family: 'Roboto-Medium';
+    margin-right: 33px;
+}
+
+.signInGoogleH{
+    box-shadow:  1px 1px 8px 8px #e1e1e1;
+    border-radius: 5px;
+    color: #757575;
+    margin-bottom: 30px;
+    font-family: 'Roboto-Medium';
+    border: none;
+    background-color: #fff;
+    padding: 13px 62px;
+}
+
+
+.homeIcons img {
+    height: 35px;
+    width: 35px;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+.BackgroundImage{
+    margin-top: 100px;
+    width: 100%;
+    height: auto;
+}
+
+.signInGoogle{
+    padding: 20px 10px;
+    box-shadow:  1px 1px 8px 8px #e1e1e1;
+    border-radius: 5px;
+    color: #757575;
+    margin-bottom: 30px;
+    font-family: 'Roboto-Medium';
+    border: none;
+    background-color: #fff;
+}

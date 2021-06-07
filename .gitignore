@@ -1,0 +1,14 @@
+node_modules
+.idea
+logs
+client/node_modules
+.env
+development.env
+production.env
+client/.eslintcache
+public
+/build.sh
+*/package-lock.json
+example.build.sh
+build.sh
+package-lock.json

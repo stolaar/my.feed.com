@@ -1,0 +1,44 @@
+.toast-message-wrapper {
+    z-index: 2001;
+    padding: 10px 20px;
+    color: #000000;
+    background-color: #ffffff;
+    border-radius: 7px;
+    bottom: 5%;
+    left: auto;
+    right: 5%;
+    position: fixed;
+    font-family: Lato-Bold, sans-serif;
+    font-size: 15px;
+    border: 1px solid #d3d3d3;
+    min-width: 160px;
+    max-width: 200px;
+    word-break: break-word;
+    text-align: center;
+}
+
+.toast-message-wrapper.toast-error {
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+/* -----------------TOAST SOCIAL LINKS----------------------------- */
+.toastSocialLinks {
+    padding: 4px 8px;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    background: #ffffff;
+    border-radius: 7px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-family: Lato-Bold, sans-serif;
+    font-size: 16px;
+    min-width: 160px;
+    max-width: 200px;
+    word-break: break-word;
+    text-align: center;
+    z-index: 2001;
+}
+
+

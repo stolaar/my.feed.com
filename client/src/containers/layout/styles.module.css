@@ -1,0 +1,15 @@
+.app {
+  flex: 1 1 100%;
+  min-height: calc(100vh - 140px);
+  display: flex;
+  justify-content: center;
+  width: 100% !important;
+}
+
+/* .app h2,
+.app p,
+.app span,
+.app h3,
+.app label {
+  color: #dfdfdf;
+} */

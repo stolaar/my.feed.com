@@ -1,0 +1,9 @@
+.BackgroundImage{
+    margin-top: 80px;
+    width: 100%;
+    height: auto;
+}
+.divRow {
+    justify-content: center;
+    align-items: center;
+}
