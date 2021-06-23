@@ -13,9 +13,10 @@ const { roles, rbacConfig } = require('../../config/roles')
 const {services: {auth: errorMessages}, common: commonErrors} = require('../../constants/errorMessages')
 const loadTemplate = require('../../utils/html/loadTemplate')
 const parseTemplate = require('../../utils/html/parseTemplate')
+const {UserRepository} = require('../../models/repositories')
 
 class AuthService {
-    constructor(usersRepository = db.users,
+    constructor(usersRepository = UserRepository,
                 validationService = new ValidationService(),
                 jwtService = new JWTService(),
                 emailService = new EmailService(),

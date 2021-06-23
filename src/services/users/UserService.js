@@ -2,35 +2,39 @@ const BadRequest = require('../../errors/BadRequest')
 const isEmpty = require("lodash.isempty")
 const ValidationService = require("../validation/ValidationService")
 const bcrypt = require("bcryptjs")
+const {UserRolesRepository, UserRepository} = require('../../models/repositories')
 
 class UserService {
-  constructor(validationService = new ValidationService(), _db = require('../../models/db')) {
+  constructor(validationService = new ValidationService(),
+              userRolesRepository = UserRolesRepository,
+              usersRepository = UserRepository) {
     this.validationService = validationService
-    this.db = _db
+    this.userRolesRepository = userRolesRepository
+    this.usersRepository = usersRepository
   }
 
   getUserRoles(userId) {
-    return this.db.userRoles.getUserRoles(userId)
+    return this.userRolesRepository.getUserRoles(userId)
   }
 
   getAllUsers() {
-    return this.db.users.all()
+    return this.usersRepository.all()
   }
 
   async getUserByEmail(email) {
-    return await this.db.users.findByEmail(email)
+    return await this.usersRepository.findByEmail(email)
   }
 
   getUserByExternalId(id_label, id) {
-    return this.db.users.getUserByExternalId(id_label, id)
+    return this.usersRepository.getUserByExternalId(id_label, id)
   }
 
   createUser(user, provider = null) {
-    return this.db.users.addUser(user, provider)
+    return this.usersRepository.addUser(user, provider)
   }
 
   getUserById(id) {
-    return this.db.users.findById(id)
+    return this.usersRepository.findById(id)
   }
 
   async isUserRegistered(email) {
@@ -39,11 +43,11 @@ class UserService {
   }
 
   addUserRole(role, user_id) {
-    return this.db.userRoles.addRole({ role, user_id })
+    return this.userRolesRepository.addRole({ role, user_id })
   }
 
   updatePassword(password = '', userId) {
-    return this.db.users.updatePassword(password, userId)
+    return this.usersRepository.updatePassword(password, userId)
   }
 
   async updateUser(data, user) {
@@ -58,7 +62,7 @@ class UserService {
       data.password = await bcrypt.hash(data.password, 12)
     }
 
-    return db.users.updateUser(data, user.id)
+    return this.usersRepository.updateUser(data, user.id)
   }
 }
 

@@ -33,8 +33,11 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
+    "pg": "^8.6.0",
+    "pg-hstore": "^2.3.4",
     "pg-promise": "^10.9.2",
     "postgres-migrations": "^5.1.1",
+    "sequelize": "^6.6.2",
     "validator": "^13.5.2",
     "winston": "^3.3.3",
     "winston-mail": "^2.0.0"

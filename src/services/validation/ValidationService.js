@@ -48,6 +48,10 @@ class ValidationService {
         'Passwords are not matching'
       )
   }
+
+  validateUserUpdate(data) {
+    return true
+  }
 }
 
 module.exports = ValidationService

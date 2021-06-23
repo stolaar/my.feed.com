@@ -1,4 +1,3 @@
-const database = require('../../models/db')
 const BadRequest = require('../../errors/BadRequest')
 const UserService = require('../users/UserService')
 const EmailService = require('../email/EmailService')
@@ -10,8 +9,7 @@ const parseTemplate = require('../../utils/html/parseTemplate')
 const {services: {auth: authErrorMessages}, common: commonErrors} = require('../../constants/errorMessages')
 
 class PasswordResetService {
-  constructor(db, usersService, emailService, authService, validationService) {
-    this.db = db || database
+  constructor(usersService, emailService, authService, validationService) {
     this.usersService = usersService || new UserService()
     this.emailService = emailService || new EmailService()
     this.authService = authService || new AuthService()

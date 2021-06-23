@@ -1,19 +1,3 @@
-const sql = require("../sql").userRoles;
-
-const cs = {};
-
-function createColumnsets(pgp) {
-  if (!cs.insert) {
-    const table = new pgp.helpers.TableName({
-      table: "user_roles",
-      schema: "public"
-    });
-    cs.insert = new pgp.helpers.ColumnSet(["name"], { table });
-    cs.update = cs.insert.extend(["?id", "?user_id"]);
-  }
-  return cs;
-}
-
 class UserRolesRepository {
   constructor(db, pgp) {
     this.db = db;

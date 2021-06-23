@@ -1,52 +1,51 @@
-const sql = require('../sql').users
 const bcrypt = require("bcryptjs")
 const keys = require('../../config/keys')
-const RBAC = require('../../services/rbac/RBACService')
-const rbacService = new RBAC()
-const {roles} = require('../../config/roles')
 
 // TODO: MOVE THE QUERIES TO RESPECTIVE SQL FILE
 class UserRepository {
-    constructor(db, pgp) {
-        this.db = db
-        this.pgp = pgp
+    constructor(model) {
+        this.model = model
     }
 
     getAll() {
-        return this.db.any(sql.getAll)
+        return this.model.selectAll()
     }
 
     drop() {
-        return this.db.any(sql.drop)
+        return this.model.drop()
     }
 
     findByIdAndEmail(id, email) {
-        return this.db.oneOrNone(sql.findByIdAndEmail, [id, email])
+        return this.model.findOne({user_id: id, email})
     }
 
     findByEmail(email) {
-        return this.db.oneOrNone(sql.findByEmail, [email])
+        return this.model.findOne({email}).selectAll()
     }
 
     updatePassword(password, id) {
-        return this.db.oneOrNone('UPDATE users SET password = $1 WHERE user_id = $2', [password, +id])
+        // return this.db.oneOrNone('UPDATE users SET password = $1 WHERE user_id = $2', [password, +id])
     }
 
     getUserByExternalId(provider, id) {
-        return this.db.oneOrNone(`SELECT * FROM users WHERE ${provider} = $1`, id)
+        return this.model.findOne({[provider]: id})
     }
 
     findById(id) {
-        return this.db.oneOrNone(sql.findById, [id])
-    }
-
-    async findByUsername(podcast_username) {
-        return await this.db.oneOrNone(sql.findByUsername, [podcast_username])
+        return this.model.findOne({user_id: id})
     }
 
     async createUser(values) {
         const userData = { ...values }
-        return await this.db.one(sql.createUser, userData)
+        return this.model.create(userData)
+    }
+
+    async addUser() {
+
+    }
+
+    updateUser() {
+
     }
 
     async initAdmin() {
@@ -56,7 +55,6 @@ class UserRepository {
         const password = await bcrypt.hash(keys.admin.initPassword, 10)
         console.log('password', password)
         // const user = await this.db.one(sql.createUser, {email: keys.admin.initEmail, password, name: 'Admin'})
-        await rbacService.addUserRoles(1, [roles.superAdmin])
     }
 }
 

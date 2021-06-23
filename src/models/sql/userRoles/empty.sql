@@ -1,1 +1,0 @@
-TRUNCATE TABLE ${schema~}.user_roles CASCADE

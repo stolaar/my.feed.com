@@ -1,30 +1,26 @@
-const sql = require('../sql').tokens
-
-// TODO: move queries to separate sql files
 class TokensRepository {
-    constructor(db, pgp) {
-        this.db = db
-        this.pgp = pgp
+    constructor(model) {
+        this.model = model
     }
 
     getAll() {
-        return this.db.any(sql.getAll)
+        return this.model.selectAll()
     }
 
     drop() {
-        return this.db.any(sql.drop)
+        return this.model.drop()
     }
 
     add(values) {
-        return this.db.one('INSERT INTO tokens (user_id, token) VALUES (${user_id}, ${token}) RETURNING *', values)
+        return this.model.create(values)
     }
 
     findToken(token) {
-        return this.db.any("SELECT * FROM tokens WHERE token = $1", token);
+        return this.model.selectAll().where({token})
     }
 
     remove(token) {
-        return this.db.any("DELETE FROM tokens WHERE token = $1", token);
+        return this.model.remove().where({token})
     }
 }
 

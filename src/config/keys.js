@@ -5,6 +5,11 @@ const {DB_USER = '',
     DB_DATABASE = '',
     SECRET_OR_KEY,
     NODE_ENV,
+    DB_DIALECT,
+    DB_POOL_MAX,
+    DB_POOL_MIN,
+    DB_POOL_ACQUIRE,
+    DB_POOL_IDLE
 } = process.env
 
 const keys = {
@@ -18,6 +23,13 @@ const keys = {
             prefer: true,
             rejectUnauthorized: false,
         },
+        dialect: DB_DIALECT || 'postgres',
+        pool: {
+            max: +DB_POOL_MAX,
+            min: +DB_POOL_MIN,
+            acquire: +DB_POOL_ACQUIRE,
+            idle: +DB_POOL_IDLE
+        }
     },
     authentication: {
         jwt: {

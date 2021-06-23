@@ -1,58 +1,24 @@
-const promise = require('bluebird')
-const keys = require('../config/keys')
-const {createDb, migrate} = require("postgres-migrations")
-const repos = require('./repositories')
-const logger = require('../jobs/logger/logger')
-
-const initOptions = {
-    promiseLib: promise,
-    extend(obj, dc) {
-        obj.users = new repos.Users(obj, pgp)
-        obj.tokens = new repos.Tokens(obj, pgp)
-        obj.userRoles = new repos.UserRoles(obj, pgp)
+const {db: dbConfig} = require('../config/keys')
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, {
+    host: dbConfig.host,
+    dialect: dbConfig.dialect,
+    operatorsAliases: false,
+    pool: {
+        max: dbConfig.pool.max,
+        min: dbConfig.pool.min,
+        acquire: dbConfig.pool.acquire,
+        idle: dbConfig.pool.idle
     }
-}
+});
 
-const pgp = require('pg-promise')(initOptions)
+const db = {};
 
-const db = pgp(keys.db)
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
-const initDb = async (db, maxTries = 10) => {
-    try {
-        try {
-            await createDb(keys.db.database, {...keys.db, defaultDatabase: "postgres"})
-        } catch (err) {
-            logger.error({label: "Error creating db", err})
-        }
-        await migrate(keys.db, './src/models/migrations/')
-    } catch (err) {
-        if(maxTries < 0) {
-            logger.error({label: "Migrations error", err: err.message})
-            return null
-        }
-        return initDb(db, --maxTries)
-    }
-}
+db.tokens = require("./definitions/Tokens")(sequelize, Sequelize);
+db.users = require("./definitions/User")(sequelize, Sequelize, {Token: db.tokens});
+db.userRoles = require("./definitions/UserRoles")(sequelize, Sequelize, {User: db.users});
 
-initDb(db)
-    .then(() => {
-        db.connect()
-            .then(async function (obj) {
-                logger.info("Postgres connected!")
-                const {initAdmin} = require('./init')
-                try {
-                    await initAdmin(db)
-                } catch (err) {
-                    logger.error(err)
-                } finally {
-                    obj.done();
-                }
-            })
-            .catch(function (err) {
-                logger.error({label: "Postgres error", err})
-                process.exit(1)
-            });
-    })
-    .catch(err => logger.error(err))
-
-module.exports = db
+module.exports = db;
