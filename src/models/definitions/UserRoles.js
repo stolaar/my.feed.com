@@ -1,5 +1,11 @@
-module.exports = (sequelize, Sequelize, {User}) => {
+module.exports = (sequelize, Sequelize) => {
     const UserRole = sequelize.define("user_roles", {
+        id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            allowNull: false,
+            autoIncrement: true
+        },
         user_id: {
             type: Sequelize.INTEGER
         },
@@ -7,9 +13,6 @@ module.exports = (sequelize, Sequelize, {User}) => {
             type: Sequelize.TEXT
         }
     });
-
-    UserRole.hasOne(User)
-    User.Roles = User.hasMany(UserRole)
 
     return UserRole;
 };

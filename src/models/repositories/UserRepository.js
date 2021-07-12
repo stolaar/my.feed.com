@@ -1,7 +1,6 @@
 const bcrypt = require("bcryptjs")
 const keys = require('../../config/keys')
 
-// TODO: MOVE THE QUERIES TO RESPECTIVE SQL FILE
 class UserRepository {
     constructor(model) {
         this.model = model
@@ -16,11 +15,14 @@ class UserRepository {
     }
 
     findByIdAndEmail(id, email) {
-        return this.model.findOne({user_id: id, email})
+        return this.model.findOne({where: {user_id: id, email}})
     }
 
     findByEmail(email) {
-        return this.model.findOne({email}).selectAll()
+        return this.model.findOne({
+        attributes: ['email', 'password', 'user_id'],
+        where: {email}
+        })
     }
 
     updatePassword(password, id) {
@@ -28,7 +30,7 @@ class UserRepository {
     }
 
     getUserByExternalId(provider, id) {
-        return this.model.findOne({[provider]: id})
+        return this.model.findOne({where: {user_id: id}})
     }
 
     findById(id) {
@@ -49,11 +51,11 @@ class UserRepository {
     }
 
     async initAdmin() {
-
-        // const existing = await this.db.oneOrNone('SELECT * FROM users WHERE email = $1', [keys.admin.initEmail])
-        // if(existing) return null
+        const existing = await this.findByEmail(keys.admin.initEmail)
+        if(existing) return null
         const password = await bcrypt.hash(keys.admin.initPassword, 10)
-        console.log('password', password)
+
+        this.createUser({email: keys.admin.initEmail, password, name: 'Admin'})
         // const user = await this.db.one(sql.createUser, {email: keys.admin.initEmail, password, name: 'Admin'})
     }
 }

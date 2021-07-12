@@ -18,7 +18,11 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.tokens = require("./definitions/Tokens")(sequelize, Sequelize);
-db.users = require("./definitions/User")(sequelize, Sequelize, {Token: db.tokens});
-db.userRoles = require("./definitions/UserRoles")(sequelize, Sequelize, {User: db.users});
+db.users = require("./definitions/User")(sequelize, Sequelize);
+db.userRoles = require("./definitions/UserRoles")(sequelize, Sequelize);
+
+db.users.hasMany(db.tokens, {as: 'tokens', foreignKey: 'user_id'})
+db.userRoles.belongsTo(db.users)
+db.users.hasMany(db.userRoles)
 
 module.exports = db;

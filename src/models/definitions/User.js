@@ -1,7 +1,10 @@
-module.exports = (sequelize, Sequelize, {Token}) => {
+module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("users", {
         user_id: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            allowNull: false,
+            autoIncrement: true
         },
         name: {
             type: Sequelize.TEXT
@@ -13,8 +16,6 @@ module.exports = (sequelize, Sequelize, {Token}) => {
             type: Sequelize.TEXT
         }
     });
-
-    User.tokens = User.hasMany(Token)
 
     return User;
 };

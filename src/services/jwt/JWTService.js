@@ -2,9 +2,10 @@ const {authentication} = require("../../config/keys")
 const db = require("../../models/db")
 const jwt = require("jsonwebtoken")
 const {SECRET_OR_KEY} = process.env
+const {TokensRepository} = require('../../models/repositories')
 
 class JWTService {
-    constructor(tokensRepository = db.tokens) {
+    constructor(tokensRepository = TokensRepository) {
         this.tokensRepository = tokensRepository
     }
 
