@@ -3,10 +3,6 @@ class TokensRepository {
         this.model = model
     }
 
-    getAll() {
-        return this.model.selectAll()
-    }
-
     drop() {
         return this.model.drop()
     }
@@ -16,11 +12,13 @@ class TokensRepository {
     }
 
     findToken(token) {
-        return this.model.selectAll().where({token})
+        return this.model.selectAll({where: {token}})
     }
 
     remove(token) {
-        return this.model.remove().where({token})
+        return this.model.remove({
+            where: {token}
+        })
     }
 }
 

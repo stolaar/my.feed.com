@@ -56,6 +56,7 @@ class UserRepository {
         const password = await bcrypt.hash(keys.admin.initPassword, 10)
 
         this.createUser({email: keys.admin.initEmail, password, name: 'Admin'})
+            .catch(err => console.error(err))
         // const user = await this.db.one(sql.createUser, {email: keys.admin.initEmail, password, name: 'Admin'})
     }
 }

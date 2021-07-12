@@ -1,18 +1,23 @@
-module.exports = (sequelize, Sequelize) => {
-    const UserRole = sequelize.define("user_roles", {
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true,
-            allowNull: false,
-            autoIncrement: true
-        },
-        user_id: {
-            type: Sequelize.INTEGER
-        },
-        role: {
-            type: Sequelize.TEXT
-        }
-    });
+const db = require('../db')
+const Sequelize = require('sequelize')
 
-    return UserRole;
-};
+const UserRole = db.define("user_roles", {
+    id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true
+    },
+    user_id: {
+        type: Sequelize.INTEGER
+    },
+    role: {
+        type: Sequelize.TEXT
+    }
+}, {
+    timestamps: true,
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
+});
+
+module.exports = UserRole

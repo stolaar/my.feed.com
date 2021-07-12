@@ -1,28 +1,54 @@
 const {db: dbConfig} = require('../config/keys')
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, {
+const logger = require('../jobs/logger/logger')
+const {createDb, migrate} = require("postgres-migrations")
+
+const db = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, {
     host: dbConfig.host,
     dialect: dbConfig.dialect,
-    operatorsAliases: false,
     pool: {
         max: dbConfig.pool.max,
         min: dbConfig.pool.min,
         acquire: dbConfig.pool.acquire,
         idle: dbConfig.pool.idle
-    }
+    },
+    logging:  process.env.NODE_ENV === 'development'
+        ? (msg) => logger.debug(msg)
+        : false
 });
 
-const db = {};
+const authenticate = async () => {
+    try {
+        await createDb(dbConfig.database, {
+            host: dbConfig.host,
+            port: dbConfig.port,
+            user: dbConfig.user,
+            password: dbConfig.password,
+            defaultDatabase: "postgres"
+        })
+    } catch (err) {
+        logger.error('create prob')
+    }
+    try {
+        await migrate({
+            host: dbConfig.host,
+            port: dbConfig.port,
+            database: dbConfig.database,
+            user: dbConfig.user,
+            password: dbConfig.password
+        }, './src/models/migrations/')
+    } catch (err) {
+        logger.error(err.message)
+    } finally {
+        db.authenticate()
+            .then(async () => {
+                logger.info('Database connected!')
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+            })
+            .catch(() => process.exit(1))
+    }
+}
 
-db.tokens = require("./definitions/Tokens")(sequelize, Sequelize);
-db.users = require("./definitions/User")(sequelize, Sequelize);
-db.userRoles = require("./definitions/UserRoles")(sequelize, Sequelize);
-
-db.users.hasMany(db.tokens, {as: 'tokens', foreignKey: 'user_id'})
-db.userRoles.belongsTo(db.users)
-db.users.hasMany(db.userRoles)
+authenticate().catch(err => logger.error(err))
 
 module.exports = db;
