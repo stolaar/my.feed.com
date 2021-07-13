@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useHistory, useParams } from 'react-router'
 import { registerRedirect } from '../../pages/auth/services/actions'
 import { useDispatch, useSelector } from 'react-redux'
-import { homePageRoute } from '../../config/routes'
+import { landingPageRoute } from '../../config/routes'
 import { setRegisterRedirectResponse } from '../../store/actions/feedbackActions'
 
 function RegisterConfirmation() {
@@ -21,7 +21,7 @@ function RegisterConfirmation() {
   }, [dispatch, confirmationToken])
 
   useEffect(() => {
-    if (isAuthenticated) history.push(homePageRoute.path)
+    if (isAuthenticated) history.push(landingPageRoute.path)
   }, [isAuthenticated, history])
 
   useEffect(() => {

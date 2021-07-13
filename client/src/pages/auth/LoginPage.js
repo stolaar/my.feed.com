@@ -5,7 +5,7 @@ import LoginForm from "../../components/auth/LoginForm"
 import { Container, Row, Col } from 'react-bootstrap'
 import classes from './SignUpPage/SignUpPage.module.css'
 import {
-    homePageRoute,}
+    landingPageRoute,}
     from '../../config/routes'
 
 function LoginPage() {
@@ -16,7 +16,7 @@ function LoginPage() {
     const history = useHistory()
 
     useEffect(() => {
-        isAuthenticated && history.push(homePageRoute.path)
+        isAuthenticated && history.push(landingPageRoute.path)
       }, [isAuthenticated, history])
 
     return (

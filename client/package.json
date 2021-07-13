@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
+    "@material-ui/core": "^4.12.1",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.57",
     "@stripe/react-stripe-js": "^1.4.0",
@@ -12,6 +12,7 @@
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
     "axios": "^0.21.1",
+    "clsx": "^1.1.1",
     "d3": "^6.6.1",
     "d3-axis": "^2.1.0",
     "d3-interpolate": "^2.0.1",

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Column from '../../../containers/layout/Column'
 import Row from '../../../containers/layout/Row'
 import { useHistory } from 'react-router-dom'
-import { homePageRoute } from '../../../config/routes'
+import {landingPageRoute} from '../../../config/routes'
 import useForm from '../../../hooks/useForm'
 import { passwordResetRequest } from '../services/actions'
 import { useDispatch, useSelector } from 'react-redux'
@@ -35,7 +35,7 @@ function PasswordResetRequest({ show, close }) {
   }
 
   useEffect(() => {
-    isAuthenticated && history.push(homePageRoute.path)
+    isAuthenticated && history.push(landingPageRoute.path)
   }, [isAuthenticated, history])
 
   const { values, handleSubmit, handleChange } = useForm(
