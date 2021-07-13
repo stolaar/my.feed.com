@@ -16,7 +16,6 @@ import store from './store/store'
 import { getAccessToken, setCurrentUser } from './pages/auth/services/actions'
 import ProtectedRoute from './routes/ProtectedRoute'
 
-import LoaderPercentage from './components/common/loader_percentage/LoaderPercentage'
 import GuestRoute from './routes/GuestRoute'
 import Drawer from './components/navigation/drawer/Drawer'
 import AppBar from './components/navigation/appBar/AppBar'
@@ -40,7 +39,7 @@ const useStyles = makeStyles({
 
 function App() {
   const {
-    feedback: { toast, uploadPercentage }
+    feedback: { toast }
   } = useSelector(state => state)
   const [activeModal] = useModal()
   const classes = useStyles()
@@ -62,9 +61,7 @@ function App() {
       />
       {toast.show ? <ToastMessage {...toast} /> : null}
       {activeModal}
-      {uploadPercentage ? (
-        <LoaderPercentage percentage={uploadPercentage.toFixed()} />
-      ) : null}
+
       <Switch>
         {publicRoutes.map(route => {
           return <Route exact key={route.path} path={route.path} {...route} />

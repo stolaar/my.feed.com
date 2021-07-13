@@ -11,6 +11,7 @@ const BaseError = require('./src/errors/Base')
 const passport = require('passport')
 
 const authRouter = require('./src/routes/api/auth/auth')
+const feedRouter = require('./src/routes/api/feed/feed')
 const logger = require('./src/jobs/logger/logger')
 require('./src/models/db')
 
@@ -41,14 +42,15 @@ app.use((req, res, next) => {
 require('./src/authentication/jwt')(passport)
 
 app.use('/api/auth', authRouter)
+app.use('/api/feed', feedRouter)
 
 app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'client/build/index.html'), function (err) {
-    if (err) {
-      res.status(500).send(err.message)
-    }
+    // if (err) {
+    //   res.status(500).send(err.message)
+    // }
   })
 })
 

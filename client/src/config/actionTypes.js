@@ -14,3 +14,4 @@ export const SET_DRAWER = 'SET_DRAWER'
 
 
 export const SET_SIDEBAR = 'SET_SIDEBAR'
+export const SET_POSTS = 'SET_POSTS'
