@@ -4,6 +4,7 @@ const keys = require('../../config/keys')
 class UserRepository {
     constructor(model) {
         this.model = model
+        this.initAdmin()
     }
 
     getAll() {
@@ -23,10 +24,6 @@ class UserRepository {
         attributes: ['email', 'password', 'user_id'],
         where: {email}
         })
-    }
-
-    updatePassword(password, id) {
-        // return this.db.oneOrNone('UPDATE users SET password = $1 WHERE user_id = $2', [password, +id])
     }
 
     getUserByExternalId(provider, id) {
@@ -57,7 +54,6 @@ class UserRepository {
 
         this.createUser({email: keys.admin.initEmail, password, name: 'Admin'})
             .catch(err => console.error(err))
-        // const user = await this.db.one(sql.createUser, {email: keys.admin.initEmail, password, name: 'Admin'})
     }
 }
 

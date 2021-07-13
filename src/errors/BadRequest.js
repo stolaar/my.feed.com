@@ -7,7 +7,7 @@ class BadRequest extends BaseError {
     this.httpCode = 400;
     this.message = message;
     this.short_message = this.stringifyShortMessage(short_message || message);
-
+    if(process.env.NODE_ENV !== 'development') delete this.stack
   }
 
   stringifyShortMessage(short_message) {
