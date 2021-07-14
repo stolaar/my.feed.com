@@ -40,7 +40,10 @@ function Drawer() {
     <Fragment>
       <div className={classes.toolbar} />
       <div className={classes.drawerHeader}>
-        LOGO
+          <span id={'brand'}>
+              LOGO
+          </span>
+
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === 'ltr' ? (
             <ChevronLeftIcon />

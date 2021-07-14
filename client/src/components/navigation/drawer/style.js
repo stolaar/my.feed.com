@@ -14,7 +14,13 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    '& span#brand': {
+      justifySelf: 'flex-start',
+      alignSelf: 'center',
+      fontSize: '20px',
+      marginRight: 'auto'
+    }
   },
   content: {
     flexGrow: 1,

@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     },
     heading: {
         margin: 6,
-        fontSize: '16px'
+        fontSize: '18px'
     },
     selectors: {},
     button: {
@@ -33,8 +33,12 @@ function ConfigForm() {
             Selectors
         </Typography>
         <div className={classes.selectors}>
-        <InputField labelValue={'wrapper'} />
-        <InputField labelValue={'article'} />
+        <InputField labelValue={'Wrapper'} />
+        <InputField labelValue={'Article'} />
+        <InputField labelValue={'Title'} />
+        <InputField labelValue={'Image'} />
+        <InputField labelValue={'Description'} />
+        <InputField labelValue={'Link'} />
         </div>
         <Button className={classes.button} color={'primary'} variant={'contained'}>Submit</Button>
     </form>
