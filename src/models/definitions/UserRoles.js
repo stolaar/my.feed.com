@@ -2,7 +2,7 @@ const db = require('../db')
 const Sequelize = require('sequelize')
 
 const UserRole = db.define("user_roles", {
-    id: {
+    user_role_id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false,

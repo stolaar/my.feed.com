@@ -23,6 +23,7 @@ create TABLE if not exists tokens
 
 create TABLE IF NOT EXISTS user_roles
 (
+    user_role_id serial PRIMARY KEY,
     user_id    INTEGER NOT NULL,
     role       VARCHAR(255),
     created_at TIMESTAMP default NOW(),

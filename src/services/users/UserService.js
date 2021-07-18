@@ -64,6 +64,14 @@ class UserService {
 
     return this.usersRepository.updateUser(data, user.id)
   }
+
+  async getConfigurations(userId) {
+    return this.usersRepository.getConfigurations(userId)
+  }
+
+  async createConfiguration(userId, body) {
+    return this.usersRepository.createConfiguration(userId, body)
+  }
 }
 
 module.exports = UserService

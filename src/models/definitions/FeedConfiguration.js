@@ -1,33 +1,28 @@
 const db = require('../db')
 const Sequelize = require('sequelize')
 
-const User = db.define("users", {
-        user_id: {
+const FeedConfiguration = db.define("feed_configuration", {
+        feed_configuration_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             allowNull: false,
             autoIncrement: true
         },
-        name: {
+        uri: {
             type: Sequelize.TEXT
         },
-        email: {
+        label: {
             type: Sequelize.TEXT
         },
-        password: {
-            type: Sequelize.TEXT
+        feed_selectors_id: {
+            type: Sequelize.INTEGER
         }
     },
     {
         timestamps: true,
         createdAt: 'created_at',
         updatedAt: 'updated_at',
-        defaultScope: {
-            attributes: {
-                include: ['name', 'email', 'user_id'],
-                exclude: ['password', 'created_at', 'updated_at']
-            }
-        }
+        tableName: 'feed_configuration'
     });
 
-module.exports = User
+module.exports = FeedConfiguration
