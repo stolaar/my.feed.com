@@ -15,3 +15,6 @@ export const SET_DRAWER = 'SET_DRAWER'
 
 export const SET_SIDEBAR = 'SET_SIDEBAR'
 export const SET_POSTS = 'SET_POSTS'
+export const SET_CONFIG = 'SET_CONFIG'
+export const SET_SELECTORS = 'SET_SELECTORS'
+export const SET_CONFIGRATIONS = 'SET_CONFIGRATIONS'

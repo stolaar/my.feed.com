@@ -3,6 +3,8 @@ import InputField from "../../common/InputField";
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import {Button, makeStyles} from "@material-ui/core";
+import {useDispatch, useSelector} from "react-redux";
+import {createConfig, setConfig, setSelectors} from "../../../pages/scrapeConfig/services/actions";
 
 const useStyles = makeStyles({
     form: {
@@ -20,10 +22,25 @@ const useStyles = makeStyles({
 
 function ConfigForm() {
     const classes = useStyles()
+    const {configuration} = useSelector(state => state.scrapeConfig)
+    const dispatch = useDispatch()
 
-    return <form className={classes.form}>
-        <InputField labelValue={'URI'} />
-        <InputField labelValue={'Label'} />
+    const onConfigChange = (e) => {
+        dispatch(setConfig({...configuration, [e.target.name]: e.target.value}))
+    }
+
+    const onSelectorsChange = (e) => {
+        dispatch(setSelectors({...configuration.selectors, [e.target.name]: e.target.value}))
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        dispatch(createConfig(configuration))
+    }
+
+    return <form onSubmit={onSubmit} className={classes.form}>
+        <InputField labelValue={'URI'} name={'uri'} onChange={onConfigChange} />
+        <InputField labelValue={'Label'} name={'label'} onChange={onConfigChange} />
         <Divider />
         <Typography color="textSecondary"
                     component="h2"
@@ -33,14 +50,14 @@ function ConfigForm() {
             Selectors
         </Typography>
         <div className={classes.selectors}>
-        <InputField labelValue={'Wrapper'} />
-        <InputField labelValue={'Article'} />
-        <InputField labelValue={'Title'} />
-        <InputField labelValue={'Image'} />
-        <InputField labelValue={'Description'} />
-        <InputField labelValue={'Link'} />
+        <InputField labelValue={'Wrapper'}  name={'wrapper'} onChange={onSelectorsChange} />
+        <InputField labelValue={'Article'}  name={'article'} onChange={onSelectorsChange} />
+        <InputField labelValue={'Title'}  name={'title'} onChange={onSelectorsChange} />
+        <InputField labelValue={'Image'}  name={'image'} onChange={onSelectorsChange} />
+        <InputField labelValue={'Description'}  name={'description'} onChange={onSelectorsChange} />
+        <InputField labelValue={'Link'}  name={'link'} onChange={onSelectorsChange} />
         </div>
-        <Button className={classes.button} color={'primary'} variant={'contained'}>Submit</Button>
+        <Button type={'submit'} className={classes.button} color={'primary'} variant={'contained'}>Submit</Button>
     </form>
 }
 

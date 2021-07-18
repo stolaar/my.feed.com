@@ -12,6 +12,7 @@ const passport = require('passport')
 
 const authRouter = require('./src/routes/api/auth/auth')
 const feedRouter = require('./src/routes/api/feed/feed')
+const usersRouter = require('./src/routes/api/users/users')
 const logger = require('./src/jobs/logger/logger')
 require('./src/models/db')
 
@@ -43,6 +44,7 @@ require('./src/authentication/jwt')(passport)
 
 app.use('/api/auth', authRouter)
 app.use('/api/feed', feedRouter)
+app.use('/api/users', usersRouter)
 
 app.use(express.static(path.join(__dirname, 'client/build')))
 

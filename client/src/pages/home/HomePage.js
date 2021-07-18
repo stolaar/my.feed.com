@@ -14,19 +14,23 @@ const useStyles = makeStyles({
 })
 
 function HomePage() {
-    const dispatch = useDispatch()
-    const {posts} = useSelector(state => state.feed)
-    const classes = useStyles()
+  const dispatch = useDispatch()
+  const { posts } = useSelector(state => state.feed)
+  const classes = useStyles()
 
-    useEffect(() => {
-        dispatch(getPosts())
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(getPosts())
+  }, [dispatch])
 
-    return <MainContainer>
-        <div className={classes.posts}>
-            {posts.map(post => <Post key={post.title} {...post}/>)}
-        </div>
+  return (
+    <MainContainer>
+      <div className={classes.posts}>
+        {posts.map(post => (
+          <Post key={post.title} {...post} />
+        ))}
+      </div>
     </MainContainer>
+  )
 }
 
 export default HomePage
