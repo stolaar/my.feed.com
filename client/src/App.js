@@ -19,7 +19,8 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import GuestRoute from './routes/GuestRoute'
 import Drawer from './components/navigation/drawer/Drawer'
 import AppBar from './components/navigation/appBar/AppBar'
-import { makeStyles } from '@material-ui/core'
+import { makeStyles, ThemeProvider } from '@material-ui/core'
+import {theme} from "./styles/theme";
 
 if (localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken.split(' ')[1])
@@ -45,6 +46,7 @@ function App() {
   const classes = useStyles()
 
   return (
+   <ThemeProvider theme={theme}>
     <div className={classes.root}>
       <Route
         path={'*'}
@@ -84,6 +86,7 @@ function App() {
         <Redirect to={landingPageRoute.path} />
       </Switch>
     </div>
+      </ThemeProvider>
   )
 }
 

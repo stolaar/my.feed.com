@@ -53,7 +53,7 @@ function AppBar() {
         dispatch(handleDrawer(val))
     }
 
-    const title = drawerItems.find(({path}) => matchPath(path, pathname))
+    const title = findActivePageTitle(drawerItems, pathname)
 
     return <Fragment>
         <CssBaseline />
@@ -74,7 +74,7 @@ function AppBar() {
                 <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant="h6" noWrap>
-                {title?.name}
+                {title}
             </Typography>
         </Toolbar>
     </MaterialAppBar>
@@ -82,3 +82,14 @@ function AppBar() {
 }
 
 export default AppBar
+
+
+function findActivePageTitle(pages, pathname) {
+    return pages.reduce((acc, curr) => {
+        acc = [...acc, {path: curr.path, name: curr.name}]
+        if(curr.pages) {
+            acc = [...acc,...curr.pages.map(({path, name}) => ({path, name}))]
+        }
+        return acc
+    }, []).find(val => matchPath(val.path, pathname)?.isExact)?.name
+}

@@ -14,22 +14,18 @@ import IconButton from '@material-ui/core/IconButton'
 import { handleDrawer } from '../../../services/navigation/actions'
 import { drawerItems } from './items'
 import { ExitToApp } from '@material-ui/icons'
-import { useHistory } from 'react-router'
+import { matchPath, useHistory, useLocation } from 'react-router'
 import { logoutUser } from '../../../pages/auth/services/actions'
+import clsx from 'clsx'
 
 function Drawer() {
   const classes = useStyles()
   const { isDrawerOpen: open } = useSelector(state => state.navigation)
   const theme = useTheme()
   const dispatch = useDispatch()
-  const history = useHistory()
 
   const handleDrawerClose = val => {
     dispatch(handleDrawer(val))
-  }
-
-  const onNavItemClick = path => {
-    history.push(path)
   }
 
   const onLogout = () => {
@@ -40,9 +36,7 @@ function Drawer() {
     <Fragment>
       <div className={classes.toolbar} />
       <div className={classes.drawerHeader}>
-          <span id={'brand'}>
-              LOGO
-          </span>
+        <span id={'brand'}>LOGO</span>
 
         <IconButton onClick={handleDrawerClose}>
           {theme.direction === 'ltr' ? (
@@ -55,12 +49,7 @@ function Drawer() {
       <Divider />
       <Divider />
       <List>
-        {drawerItems.map(({ name: text, icon, path }, index) => (
-          <ListItem onClick={() => onNavItemClick(path)} button key={text}>
-            <ListItemIcon>{icon}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <RenderListItem list={drawerItems} />
       </List>
       <Divider />
       <List>
@@ -93,3 +82,36 @@ function Drawer() {
 }
 
 export default Drawer
+
+
+function RenderListItem({list = []}) {
+    const classes = useStyles()
+    const history = useHistory()
+    const { pathname } = useLocation()
+
+    const onNavItemClick = path => {
+        history.push(path)
+    }
+    return list.map(({ name: text, icon, path, pages }) => {
+            const isActive = matchPath(pathname, path)?.isExact
+            const isExanded = matchPath(pathname, path)?.isExact || pages?.some(val => matchPath(pathname, val.path))
+            return (
+                <Fragment key={text}>
+                    <ListItem
+                        onClick={() => onNavItemClick(path)}
+                        button
+
+                        className={clsx({
+                            [classes.activeItem]: isActive
+                        })}
+                    >
+                        <ListItemIcon>{icon}</ListItemIcon>
+                        <ListItemText primary={text}/>
+                    </ListItem>
+                    {isExanded ? <List className={classes.nestedList}>
+                        <RenderListItem list={pages} />
+                    </List> : null}
+                </Fragment>
+            )
+        })
+}

@@ -37,7 +37,22 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
+  },
+  activeItem: {
+    backgroundColor: theme.palette?.primary.main,
+    color: 'white',
+    '&:hover': {
+      backgroundColor: theme.palette?.info.main,
+    },
+    '& svg': {
+      color: 'white',
+    }
+  },
+  nestedList: {
+    paddingLeft: '5px'
   }
 }))
+
+
 
 export default useStyles

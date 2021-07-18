@@ -1,5 +1,5 @@
-import {landingPageRoute, scrapeConfigPage} from "../../../config/routes";
-import {Home, Settings} from "@material-ui/icons";
+import {createScrapeConfigPage, landingPageRoute, scrapeConfigPage} from "../../../config/routes";
+import {Add, Home, Settings} from "@material-ui/icons";
 
 export const drawerItems = [
     {
@@ -8,6 +8,12 @@ export const drawerItems = [
     },
     {
         ...scrapeConfigPage,
-        icon: <Settings />
+        icon: <Settings />,
+        pages: [
+            {
+                ...createScrapeConfigPage,
+                icon: <Add/>
+            }
+        ]
     }
 ]
