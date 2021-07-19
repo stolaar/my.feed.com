@@ -22,7 +22,8 @@ node {
                 "DB_DATABASE=my-feed-db-${env.BRANCH_NAME}",
                 "INIT_ADMIN_EMAIL=astolic@banzae.dev",
                 "INIT_ADMIN_PASSWORD=katakomba501!",
-                "BUILD_NUMBER=1"
+                "BUILD_NUMBER=1",
+                "NODE_ENV=staging"
                 ]) {
             stage('Build Docker Image') {
                 sh "echo GENERATE_SOURCEMAP=false >> ./client/.env"

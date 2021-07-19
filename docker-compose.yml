@@ -25,6 +25,7 @@ services:
       - EMAIL_HOST
       - INIT_ADMIN_EMAIL
       - INIT_ADMIN_PASSWORD
+      - NODE_ENV
     restart: always
     ports:
       - "${PORT_NUMBER}:5000"

@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer')
 const BadRequest = require('../../errors/BadRequest')
+const {NODE_ENV, CHROMIUM_PATH = '/usr/bin/chromium-browser'} = process.env
 
 class Scrapper {
     constructor(scrapper = puppeteer) {
@@ -36,7 +37,10 @@ class Scrapper {
     }
 
     async scrapeMultiple(configurations) {
-        const browser = await this.scrapper.launch()
+        const browser = await this.scrapper.launch({
+            executablePath: NODE_ENV === 'dev' ? undefined : CHROMIUM_PATH,
+            args: ['--no-sandbox'], // This was important. Can't remember why
+        })
 
         const promises = configurations.map(configuration => this.scrape(browser, configuration))
 
