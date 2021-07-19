@@ -20,7 +20,7 @@ node {
                 "DB_POOL_ACQUIRE=30000",
                 "DB_POOL_IDLE=10000",
                 "DB_DATABASE=my-feed-db-${env.BRANCH_NAME}",
-                "INIT_ADMIN_EMAIL=astolic@banzae.dev"
+                "INIT_ADMIN_EMAIL=astolic@banzae.dev",
                 "INIT_ADMIN_PASSWORD=katakomba501!"
                 ]) {
             stage('Build Docker Image') {
