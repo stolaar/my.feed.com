@@ -27,7 +27,7 @@ class PostsRepository {
         return post.save()
     })
     await Promise.all(promises)
-    console.log('posts', posts)
+
     return Post.bulkCreate(posts.filter(post => !result ? true : !result?.some(existingPost => existingPost.link === post.link)))
   }
 

@@ -98,12 +98,9 @@ export default function Post({ title, image, label, description, link }) {
         </Link>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
         <Link target="_blank" rel="noopener noreferrer" to={{ pathname: link }}>
           <Button color={'primary'} size="small">
-            Learn More
+            See More
           </Button>
         </Link>
       </CardActions>

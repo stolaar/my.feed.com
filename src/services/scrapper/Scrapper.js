@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer')
 const BadRequest = require('../../errors/BadRequest')
 const {NODE_ENV, CHROMIUM_PATH = '/usr/bin/chromium-browser'} = process.env
+const logger = require('../../jobs/logger/logger')
 
 class Scrapper {
     constructor(scrapper = puppeteer) {
@@ -9,7 +10,7 @@ class Scrapper {
 
     async scrape(browser, {uri, selectors, feed_configuration_id, label}) {
         const page = await browser.newPage()
-        await page.goto(uri, {waitUntil: 'load', timeout: 1000 * 20 })
+        await page.goto(uri, {waitUntil: 'load', timeout: 0 })
 
         await page.waitForSelector(selectors.wrapper)
 
@@ -26,12 +27,26 @@ class Scrapper {
                         image
                     }
                 })
-
-
             return JSON.stringify(cluster, null, 2);
         }, selectors, uri);
 
         const postsObject = JSON.parse(posts)
+
+        try {
+            for (let post of postsObject) {
+                const page = await browser.newPage()
+                await page.goto(post.link, {waitUntil: 'load', timeout: 0 })
+                await page.waitForSelector('div')
+
+                let link = await page.$eval('meta[property="og:image"]', element => element.content);
+                post.image = link
+
+                await page.close()
+            }
+        } catch (err) {
+            logger.error(err.message)
+        }
+
 
         return {label,uri,feed_configuration_id, posts: postsObject}
     }

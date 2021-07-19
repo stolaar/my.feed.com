@@ -8,7 +8,7 @@ import FeedSelectors from "./FeedSelectors";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     deleteConfiguration,
     scrapeFromConfiguration,
@@ -18,6 +18,7 @@ import {
 import {setActiveModal} from "../../store/actions/feedbackActions";
 import {edit_configuration_modal} from "../../config/modal_path";
 import SyncIcon from '@material-ui/icons/Sync';
+import clsx from 'clsx'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,12 +45,16 @@ const useStyles = makeStyles((theme) => ({
         justifySelf: 'flex-start',
         textAlign: 'left',
         marginRight: 'auto'
+    },
+    isScrapping: {
+        animation: 'spin 4s linear infinite'
     }
 }));
 
 export default function ConfigCard({uri, label, selectors, lastScrapped, feed_configuration_id}) {
     const classes = useStyles();
     const dispatch = useDispatch()
+    const {isScrapping} = useSelector(state => state.scrapeConfig)
 
     const onDeleteHandler = () => {
         dispatch(deleteConfiguration(feed_configuration_id))
@@ -80,9 +85,15 @@ export default function ConfigCard({uri, label, selectors, lastScrapped, feed_co
                     <div className={classes.tools}>
                         <div className={classes.scrapeInfo} >
                             {lastScrapped ? `Last scrapped: ${new Date(lastScrapped).toLocaleString()}` : 'Not scrapped yet!'}
-                        
-                            <IconButton onClick={onScrapeHandler} >
-                                <SyncIcon fontSize="small" />
+
+                            <IconButton disabled={isScrapping} onClick={onScrapeHandler} >
+                                <SyncIcon className={clsx({[classes.isScrapping]: isScrapping})} fontSize="small" />
+                                <style>{`
+            @keyframes spin {
+                 0% { transform: rotate(0deg); }
+                 100% { transform: rotate(360deg); }
+            }
+        `}</style>
                             </IconButton>
                         </div>
                         <IconButton onClick={onDeleteHandler} className={classes.margin}>

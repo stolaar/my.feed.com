@@ -1,7 +1,8 @@
 import {
   SET_CONFIG,
   SET_CONFIGRATIONS,
-  SET_SELECTORS
+  SET_SELECTORS,
+  SET_IS_SCRAPPING
 } from '../../../config/actionTypes'
 
 export const initialConfiguration = {
@@ -19,7 +20,8 @@ export const initialConfiguration = {
 
 const initialState = {
   configuration: initialConfiguration,
-  configurations: []
+  configurations: [],
+  isScrapping: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -39,6 +41,8 @@ const reducer = (state = initialState, action) => {
       }
     case SET_CONFIGRATIONS:
       return { ...state, configurations: action.payload }
+    case SET_IS_SCRAPPING:
+      return {...state, isScrapping: action.payload}
     default:
       return state
   }

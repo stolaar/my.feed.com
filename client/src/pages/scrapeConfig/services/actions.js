@@ -1,7 +1,8 @@
 import {
   SET_CONFIG,
   SET_SELECTORS,
-  SET_CONFIGRATIONS
+  SET_CONFIGRATIONS,
+  SET_IS_SCRAPPING
 } from '../../../config/actionTypes'
 import { setErrors } from '../../../services/errors/actions'
 import axios from 'axios'
@@ -48,11 +49,14 @@ export const deleteConfiguration = (id) => async dispatch => {
 
 export const scrapeFromConfiguration = (id) => async dispatch => {
   try {
+    dispatch(setIsScrapping(true))
     await axios.post(scrape_from_configuration_api.path, {configuration_id: id})
     dispatch(setToastMessage({message: 'Scrapped successfully!'}))
 
     dispatch(getConfigurations())
+    dispatch(setIsScrapping(false))
   } catch (err) {
+    dispatch(setIsScrapping(false))
     dispatch(setErrors(err))
   }
 }
@@ -67,3 +71,8 @@ export const updateConfig = (payload, cb) => async dispatch => {
     dispatch(setErrors(err))
   }
 }
+
+export const setIsScrapping = payload => ({
+  type: SET_IS_SCRAPPING,
+  payload
+})
