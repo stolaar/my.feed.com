@@ -12,7 +12,7 @@ RUN npm install
 WORKDIR /usr/src/myfeed/client
 RUN echo "GENERATE_SOURCEMAP=false" > ./.env
 
-RUN npm ci --only=production
+RUN npm install
 
 RUN npm run build
 
