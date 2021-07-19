@@ -31,7 +31,9 @@ class FeedService {
 
     async scrapeFromConfiguration(configId) {
         const config = await this.feedConfigurationRepository.findById(configId)
-        const {feed_configuration_id,posts} = await this.scrapper.scrapeSingleConfiguration(config)
+
+        const {feed_configuration_id,posts} = await this.scrapper.scrapeWithCheerio(config)
+
         if(isEmpty(posts)) {
             throw new BadRequest('No posts found!')
         }

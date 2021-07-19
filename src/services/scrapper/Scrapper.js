@@ -2,6 +2,8 @@ const puppeteer = require('puppeteer')
 const BadRequest = require('../../errors/BadRequest')
 const {NODE_ENV, CHROMIUM_PATH = '/usr/bin/chromium-browser'} = process.env
 const logger = require('../../jobs/logger/logger')
+const cheerio = require('cheerio')
+const request = require('request')
 
 class Scrapper {
     constructor(scrapper = puppeteer) {
@@ -74,6 +76,44 @@ class Scrapper {
             const result = await this.scrape(browser, configuration)
             await browser.close()
             return result
+        } catch (err) {
+            throw new BadRequest(err.message)
+        }
+
+    }
+
+    async scrapeWithCheerio({uri, selectors, label, feed_configuration_id}) {
+        try {
+            let list = []
+            const result = await new Promise((resolve, reject) => request(uri, function (error, response, html) {
+                if(error) return reject(error)
+                const $ = cheerio.load(html);
+                $(selectors.article).each(function(i, element){
+                    let link = $(element).find(selectors.link).attr('href')
+                    link = link ? new RegExp('(http|https)').test(link) ? link : uri + link : link
+                    const article = {
+                        title: $(element).find(selectors.title).text(),
+                        description: $(element).find(selectors.description).text(),
+                        link
+                    }
+                    list.push(article)
+                });
+                return resolve(list)
+            }));
+            for(let post of result) {
+                if(post.link) {
+                    const image = await new Promise((resolve, reject) => {
+                        request(post.link, function (error, response, html) {
+                            if(error) return reject(error)
+                            const $ = cheerio.load(html);
+                            return resolve($('meta[property="og:image"]').attr('content'))
+                        })
+
+                    })
+                    post.image = image
+                }
+            }
+            return {label, uri,feed_configuration_id, posts: result}
         } catch (err) {
             throw new BadRequest(err.message)
         }
