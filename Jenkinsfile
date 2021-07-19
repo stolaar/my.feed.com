@@ -21,7 +21,8 @@ node {
                 "DB_POOL_IDLE=10000",
                 "DB_DATABASE=my-feed-db-${env.BRANCH_NAME}",
                 "INIT_ADMIN_EMAIL=astolic@banzae.dev",
-                "INIT_ADMIN_PASSWORD=katakomba501!"
+                "INIT_ADMIN_PASSWORD=katakomba501!",
+                "BUILD_NUMBER=1"
                 ]) {
             stage('Build Docker Image') {
                 sh "echo GENERATE_SOURCEMAP=false >> ./client/.env"
