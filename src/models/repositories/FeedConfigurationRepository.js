@@ -1,4 +1,4 @@
-const FeedConfiguration= require('../definitions/FeedConfiguration')
+const {FeedSelectors, FeedConfiguration, User} = require('../definitions/index')
 
 class FeedConfigurationRepository {
     constructor(model = FeedConfiguration) {
@@ -21,6 +21,13 @@ class FeedConfigurationRepository {
         return this.model.remove({
             where: {token}
         })
+    }
+
+    async findById(configId) {
+        return this.model.findOne({where: {feed_configuration_id: configId}, include: {
+            model: FeedSelectors,
+                as: 'selectors'
+            }})
     }
 }
 

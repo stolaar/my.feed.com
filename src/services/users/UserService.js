@@ -72,6 +72,14 @@ class UserService {
   async createConfiguration(userId, body) {
     return this.usersRepository.createConfiguration(userId, body)
   }
+
+  async deleteConfiguration(userId, configId) {
+    return this.usersRepository.deleteConfiguration(userId, configId)
+  }
+
+  async updateConfiguration(userId, configId, body) {
+    return this.usersRepository.updateConfiguration(userId, configId, body)
+  }
 }
 
 module.exports = UserService

@@ -5,6 +5,7 @@ import PasswordReset from '../pages/auth/resetPassword/PasswordReset'
 import HomePage from '../pages/home/HomePage'
 import ScrapeConfigPage from '../pages/scrapeConfig/ScrapeConfigPage'
 import CreateScrapeConfigPage from "../pages/scrapeConfig/CreateScrapeConfigPage";
+import PostsPage from "../pages/posts/PostsPage";
 
 export const landingPageRoute = {
   path: '/',
@@ -24,6 +25,13 @@ export const createScrapeConfigPage = {
   exact: true,
   name: 'Create config',
   component: CreateScrapeConfigPage
+}
+
+export const categoryPageRoute = {
+  path: '/category/:category',
+  exact: true,
+  name: 'Posts',
+  component: PostsPage
 }
 
 // UNCOMMENT IF YOU WANT TO HAVE SIGNUP
@@ -47,7 +55,7 @@ export const passwordResetRoute = {
 
 export const publicRoutes = []
 
-export const privateRoutes = [landingPageRoute, scrapeConfigPage, createScrapeConfigPage]
+export const privateRoutes = [landingPageRoute, scrapeConfigPage, createScrapeConfigPage, categoryPageRoute]
 export const guestRoutes = [
   loginPageRoute,
   passwordResetRoute,

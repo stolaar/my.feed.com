@@ -5,36 +5,41 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: dashboard:${BUILD_NUMBER}
-    container_name: dashboard-${BRANCH_NAME}
+    image: myfeed:${BUILD_NUMBER}
+    container_name: myfeed-${BRANCH_NAME}
     environment:
       - DB_USER
       - DB_PASSWORD
       - DB_HOST
       - DB_PORT=5432
       - DB_DATABASE
+      - DB_DIALECT
+      - DB_POOL_MAX
+      - DB_POOL_MIN
+      - DB_POOL_ACQUIRE
+      - DB_POOL_IDLE
       - EMAIL_ADDRESS
       - EMAIL_PASSWORD
       - SECRET_OR_KEY
-      - GOOGLE_CLIENT_ID
-      - GOOGLE_SECRET
       - EMAIL_HOST
+      - INIT_ADMIN_EMAIL
+      - INIT_ADMIN_PASSWORD
     restart: always
     ports:
       - "${PORT_NUMBER}:5000"
     volumes:
-      - /opt/dashboard/logs-${BRANCH_NAME}:/usr/src/dashboard/logs:rw
-      - /opt/dashboard/data-${BRANCH_NAME}:/usr/src/dashboard/public:rw
+      - /opt/myfeed/logs-${BRANCH_NAME}:/usr/src/myfeed/logs:rw
+      - /opt/myfeed/data-${BRANCH_NAME}:/usr/src/myfeed/public:rw
   db:
     image: postgres:11.2-alpine
-    container_name: dashboard-postgres-${BRANCH_NAME}
+    container_name: myfeed-postgres-${BRANCH_NAME}
     restart: always
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_DATABASE}
     volumes:
-      - ./dashboard/init-postgres.sh:/docker-entrypoint-initdb.d/init-postgres.sh
-      - /opt/dashboard-db-${BRANCH_NAME}:/var/lib/postgresql/data
+      - ./myfeed/init-postgres.sh:/docker-entrypoint-initdb.d/init-postgres.sh
+      - /opt/myfeed-db-${BRANCH_NAME}:/var/lib/postgresql/data
     ports:
       - "${DB_PORT}:5432"

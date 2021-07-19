@@ -21,13 +21,10 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 global.appRoot = path.resolve(__dirname)
 
+app.use(express.static(path.join(__dirname, 'public')))
+
 app.get('/public/*', function (req, res, next) {
-  res.sendFile(path.join(__dirname, req.path), function (err) {
-    if (!res.headersSent && err) {
-      console.log(err)
-      return next(err)
-    }
-  })
+  res.sendFile(path.join(__dirname, req.path), function (err) {})
 })
 
 app.use(passport.initialize())
@@ -49,11 +46,7 @@ app.use('/api/users', usersRouter)
 app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'client/build/index.html'), function (err) {
-    // if (err) {
-    //   res.status(500).send(err.message)
-    // }
-  })
+  res.sendFile(path.join(__dirname, 'client/build/index.html'), function (err) {})
 })
 
 app.use((err, req, res, _) => {

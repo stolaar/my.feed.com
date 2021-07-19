@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Saving Docker Container Logs..."
-docker-compose logs -t >& "$WORKSPACE/logs-$(docker inspect --format=‘{{.Config.Image}}’ $(docker-compose ps -q zipstream)).txt"
+docker-compose logs -t >& "$WORKSPACE/logs-$(docker inspect --format=‘{{.Config.Image}}’ $(docker-compose ps -q myfeed)).txt"
 
 echo "Stoping Docker Container..."
 docker-compose down

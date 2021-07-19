@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react'
 import MainContainer from "../../containers/layout/MainContainer";
 import {useDispatch, useSelector} from "react-redux";
-import {getPosts} from "./services/actions";
-import Post from "../../components/feed/post/Post";
+import {getCategories} from "./services/actions";
 import {makeStyles} from "@material-ui/core";
+import Category from "../../components/feed/category/Category";
 
 const useStyles = makeStyles({
     posts: {
@@ -15,18 +15,18 @@ const useStyles = makeStyles({
 
 function HomePage() {
   const dispatch = useDispatch()
-  const { posts } = useSelector(state => state.feed)
+  const { categories, isCategoriesFetch } = useSelector(state => state.feed)
   const classes = useStyles()
 
   useEffect(() => {
-    dispatch(getPosts())
-  }, [dispatch])
+   if(!isCategoriesFetch) dispatch(getCategories())
+  }, [dispatch, isCategoriesFetch])
 
   return (
     <MainContainer>
       <div className={classes.posts}>
-        {posts.map(post => (
-          <Post key={post.title} {...post} />
+        {categories.map(post => (
+          <Category key={post.title} {...post} />
         ))}
       </div>
     </MainContainer>

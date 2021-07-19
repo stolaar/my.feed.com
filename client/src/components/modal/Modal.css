@@ -1,6 +1,6 @@
 .custom-modal {
     position: absolute !important;
-    z-index: 1030;
+    z-index: 9999;
     background-color: white;
     width: 50% !important;
     border: 1px solid #d3d3d3;
@@ -8,7 +8,7 @@
     padding: 16px;
     display: block !important;
     left: 25%;
-    top: 5%;
+    top: 15%;
     box-sizing: border-box;
     transition: all 0.3s ease-out;
     overflow: scroll;

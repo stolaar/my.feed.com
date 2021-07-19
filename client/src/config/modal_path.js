@@ -4,4 +4,5 @@ export const password_reset_request_modal = 'password_reset_request_modal'
 export const password_reset_request_sent_modal =
   'password_reset_request_sent_modal'
 export const password_reset_modal = 'password_reset_modal'
+export const edit_configuration_modal = 'edit_configuration_modal'
 

@@ -4,7 +4,7 @@ import {
   login_modal,
   password_reset_modal,
   password_reset_request_modal,
-  password_reset_request_sent_modal,
+  password_reset_request_sent_modal, edit_configuration_modal,
 } from '../config/modal_path'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -18,13 +18,15 @@ import { getAccessToken } from '../pages/auth/services/actions'
 import PasswordResetRequest from '../pages/auth/resetPassword/PasswordResetRequest'
 import PasswordResetRequestSent from '../pages/auth/resetPassword/PasswordResetRequestSent'
 import PasswordResetModal from '../pages/auth/resetPassword/PasswordResetModal'
+import EditConfigModal from "../components/scrapeConfig/EditConfigModal";
 
 
 export const modals = {
   [register_success_modal]: ConfirmationSentModal,
   [password_reset_request_modal]: PasswordResetRequest,
   [password_reset_request_sent_modal]: PasswordResetRequestSent,
-  [password_reset_modal]: PasswordResetModal
+  [password_reset_modal]: PasswordResetModal,
+  [edit_configuration_modal]: EditConfigModal,
 }
 
 function useModal() {

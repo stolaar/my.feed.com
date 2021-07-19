@@ -6,7 +6,7 @@ client/node_modules
 development.env
 production.env
 client/.eslintcache
-src/public
+public
 /build.sh
 */package-lock.json
 example.build.sh

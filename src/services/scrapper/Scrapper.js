@@ -1,13 +1,14 @@
 const puppeteer = require('puppeteer')
+const BadRequest = require('../../errors/BadRequest')
 
 class Scrapper {
     constructor(scrapper = puppeteer) {
         this.scrapper = scrapper
     }
 
-    async scrape(browser, {uri, selectors, label}) {
+    async scrape(browser, {uri, selectors, feed_configuration_id, label}) {
         const page = await browser.newPage()
-        await page.goto(uri, {waitUntil: 'load', timeout: 0})
+        await page.goto(uri, {waitUntil: 'load', timeout: 1000 * 20 })
 
         await page.waitForSelector(selectors.wrapper)
 
@@ -15,7 +16,7 @@ class Scrapper {
             cluster = cluster.filter(el => el.querySelector(selectors.title)?.textContent)
                 .map(el => {
                     const imageSRC = el.querySelector(selectors.image)?.src
-                    const image = imageSRC ? `${uri}/${imageSRC}` : ''
+                    const image = imageSRC ? new RegExp('(http|https)').test(imageSRC) ? imageSRC : `${uri}/${imageSRC}` : ''
 
                     return {
                         title: el.querySelector(selectors.title).textContent,
@@ -31,7 +32,7 @@ class Scrapper {
 
         const postsObject = JSON.parse(posts)
 
-        return {label,uri, posts: postsObject}
+        return {label,uri,feed_configuration_id, posts: postsObject}
     }
 
     async scrapeMultiple(configurations) {
@@ -43,6 +44,18 @@ class Scrapper {
 
         await browser.close()
         return result
+    }
+
+    async scrapeSingleConfiguration(configuration) {
+        const browser = await this.scrapper.launch()
+        try {
+            const result = await this.scrape(browser, configuration)
+            await browser.close()
+            return result
+        } catch (err) {
+            throw new BadRequest(err.message)
+        }
+
     }
 
 }

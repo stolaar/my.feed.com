@@ -4,6 +4,7 @@ const FeedConfiguration = require('./FeedConfiguration')
 const FeedSelectors = require('./FeedSelectors')
 const UserRoles = require('./UserRoles')
 const UserConfiguration = require('./UserConfiguration')
+const Post = require('./Post')
 
 Tokens.belongsTo(User, {foreignKey: 'user_id'})
 User.hasMany(Tokens, {as: 'tokens', foreignKey: 'user_id'})
@@ -17,9 +18,10 @@ FeedConfiguration.belongsToMany(User, {
 FeedConfiguration.hasOne(FeedSelectors, {
     as: 'selectors',
     foreignKey: 'feed_selectors_id',
+    onDelete: 'cascade'
 })
 
-FeedSelectors.belongsTo(FeedConfiguration, {foreignKey: 'feed_selectors_id'})
+FeedSelectors.hasOne(FeedConfiguration, {foreignKey: 'feed_selectors_id', onDelete: 'cascade', hooks: true})
 User.hasMany(UserRoles, {foreignKey: 'user_id'})
 User.belongsToMany(FeedConfiguration, {
         through: 'user_configurations',
@@ -27,11 +29,16 @@ User.belongsToMany(FeedConfiguration, {
         foreignKey: 'user_id'
     }
 )
+
+Post.belongsTo(FeedConfiguration, {foreignKey: 'feed_configuration_id', as: 'configuration'})
+FeedConfiguration.hasMany(Post, {as: 'posts', foreignKey: 'feed_configuration_id'})
+
 module.exports = {
     User,
     Tokens,
     FeedConfiguration,
     FeedSelectors,
     UserRoles,
-    UserConfiguration
+    UserConfiguration,
+    Post
 }

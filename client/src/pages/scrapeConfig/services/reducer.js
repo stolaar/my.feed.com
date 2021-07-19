@@ -4,10 +4,21 @@ import {
   SET_SELECTORS
 } from '../../../config/actionTypes'
 
+export const initialConfiguration = {
+  uri: '',
+  label: '',
+  selectors: {
+    wrapper: '',
+    article: '',
+    title: '',
+    description: '',
+    image: '',
+    link: ''
+  }
+}
+
 const initialState = {
-  configuration: {
-    selectors: {}
-  },
+  configuration: initialConfiguration,
   configurations: []
 }
 
