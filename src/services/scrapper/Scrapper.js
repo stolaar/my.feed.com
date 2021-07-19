@@ -51,7 +51,10 @@ class Scrapper {
     }
 
     async scrapeSingleConfiguration(configuration) {
-        const browser = await this.scrapper.launch()
+        const browser = await this.scrapper.launch({
+            executablePath: NODE_ENV === 'development' ? undefined : CHROMIUM_PATH,
+            args: ['--no-sandbox'], // This was important. Can't remember why
+        })
         try {
             const result = await this.scrape(browser, configuration)
             await browser.close()
