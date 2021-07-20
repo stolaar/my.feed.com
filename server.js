@@ -52,6 +52,7 @@ app.get('/*', function (req, res) {
 app.use((err, req, res, _) => {
   let statusCode = err.httpCode || 400
   if (!(err instanceof BaseError)) {
+    logger.error({label: 'Unhandled error', err})
     process.exit(1)
   }
   return res.status(statusCode).send(err)

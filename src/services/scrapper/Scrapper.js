@@ -92,28 +92,35 @@ class Scrapper {
                     let link = $(element).find(selectors.link).attr('href')
                     link = link ? new RegExp('(http|https)').test(link) ? link : uri + link : link
                     const article = {
-                        title: $(element).find(selectors.title).text(),
-                        description: $(element).find(selectors.description).text(),
+
                         link
                     }
                     list.push(article)
                 });
                 return resolve(list)
             }));
+            const validPosts = []
             for(let post of result) {
                 if(post.link) {
-                    const image = await new Promise((resolve, reject) => {
+                    const updatedPost = await new Promise((resolve, reject) => {
                         request(post.link, function (error, response, html) {
-                            if(error) return reject(error)
+                            if(error) return reject(new BadRequest('Error requesting page ' + post.link, error.message))
                             const $ = cheerio.load(html);
-                            return resolve($('meta[property="og:image"]').attr('content'))
+                            const updatedPost = {
+                                image: $('meta[property="og:image"]').attr('content'),
+                                title: $('meta[property="og:title"]').attr('content'),
+                                description: $('meta[property="og:description"]').attr('content'),
+                            }
+                            if(!updatedPost.title) return reject(new BadRequest('Cannot get the post name'))
+                            return resolve(updatedPost)
                         })
 
                     })
-                    post.image = image
+                    post = {...post,...updatedPost}
+                    validPosts.push(post)
                 }
             }
-            return {label, uri,feed_configuration_id, posts: result}
+            return {label, uri,feed_configuration_id, posts: validPosts}
         } catch (err) {
             throw new BadRequest(err.message)
         }
