@@ -102,22 +102,29 @@ class Scrapper {
             const validPosts = []
             for(let post of result) {
                 if(post.link) {
-                    const updatedPost = await new Promise((resolve, reject) => {
-                        request(post.link, function (error, response, html) {
-                            if(error) return reject(new BadRequest('Error requesting page ' + post.link, error.message))
-                            const $ = cheerio.load(html);
-                            const updatedPost = {
-                                image: $('meta[property="og:image"]').attr('content'),
-                                title: $('meta[property="og:title"]').attr('content'),
-                                description: $('meta[property="og:description"]').attr('content'),
-                            }
-                            if(!updatedPost.title) return reject(new BadRequest('Cannot get the post name'))
-                            return resolve(updatedPost)
-                        })
+                    try {
+                        const updatedPost = await new Promise((resolve, reject) => {
+                            request(post.link, function (error, response, html) {
+                                if(error) return reject(new BadRequest('Error requesting page ' + post.link, error.message))
+                                const $ = cheerio.load(html);
+                                const updatedPost = {
+                                    image: $('meta[property="og:image"]').attr('content'),
+                                    title: $('meta[property="og:title"]').attr('content') || $('title').text(),
+                                    description: $('meta[property="og:description"]').attr('content'),
+                                }
+                                if(!updatedPost.title) {
+                                    return reject(new BadRequest('Cannot get the post name'))
+                                }
+                                return resolve(updatedPost)
+                            })
 
-                    })
-                    post = {...post,...updatedPost}
-                    validPosts.push(post)
+                        })
+                        post = {...post,...updatedPost}
+                        validPosts.push(post)
+                    } catch (err) {
+                        logger.error(err, post)
+                    }
+
                 }
             }
             return {label, uri,feed_configuration_id, posts: validPosts}
