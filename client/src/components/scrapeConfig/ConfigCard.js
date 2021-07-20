@@ -23,7 +23,7 @@ import clsx from 'clsx'
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
-        margin: '10px'
+        margin: '10px auto 10px auto'
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),

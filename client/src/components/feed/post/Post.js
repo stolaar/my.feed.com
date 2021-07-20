@@ -40,15 +40,22 @@ const useStyles = makeStyles(theme => ({
     fontSize: 12
   },
   description: {
-    height: 100,
     fontSize: '12px'
   },
   title: {
     fontSize: '16px',
-    height: 60,
+    // height: 60,
     '& :hover': {
       textDecoration: 'none'
     }
+  },
+  actionsContainer: {
+     flex: 0,
+     maxHeight: '100%'
+  },
+  content: {
+    flex: '0 1 100%',
+    minHeight: '100%'
   }
 }))
 
@@ -66,7 +73,7 @@ export default function Post({ title, image, label, description, link }) {
   }
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <CardActionArea className={classes.actionsContainer}>
         <Link target="_blank" rel="noopener noreferrer" to={{ pathname: link }}>
           <CardMedia
             component="img"
@@ -76,7 +83,7 @@ export default function Post({ title, image, label, description, link }) {
             image={postImage}
             title="Contemplative Reptile"
           />
-          <CardContent>
+          <CardContent className={classes.content}>
             <Typography
               color={'textPrimary'}
               className={classes.title}
