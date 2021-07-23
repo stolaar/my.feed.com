@@ -5,10 +5,10 @@ const FeedController = require("../../../controllers/FeedController")
 const feedController = new FeedController()
 const passport = require('passport')
 
-// @route GET /api/feed
+// @route GET /api/feed/categories
 // @desc Get user posts
 // @access Public
-router.get('/', (req, res, next) => feedController.getPosts(req, res, next))
+router.get('/categories', (req, res, next) => feedController.getCategories(req, res, next))
 
 // @route POST /api/feed/scrape-posts
 // @desc Scrape configuration posts

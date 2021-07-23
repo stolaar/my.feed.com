@@ -7,10 +7,10 @@ class AuthController extends BaseController {
         this.feedService = feedService
     }
 
-    async getPosts(req, res, next) {
+    async getCategories(req, res, next) {
         try {
-            const posts = await this.feedService.fetchPosts()
-            return res.status(200).send(posts)
+            const categories = await this.feedService.getCategories()
+            return res.status(200).send(categories)
         } catch (err) {
             next(err)
         }

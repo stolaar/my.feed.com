@@ -1,29 +1,24 @@
 const Scrapper = require('../scrapper/Scrapper')
-const {FeedConfigurationRepository, PostsRepository, UserRepository} = require('../../models/repositories/index')
-const mockPosts = require('../../mock/posts.json')
+const {FeedConfigurationRepository, PostsRepository} = require('../../models/repositories/index')
 const isEmpty = require('lodash.isempty')
 const BadRequest = require('../../errors/BadRequest')
 
 class FeedService {
     constructor(scrapper = new Scrapper(),
                 feedConfigurationRepository = FeedConfigurationRepository,
-                postsRepository = PostsRepository ,
-                usersRepository = UserRepository) {
+                postsRepository = PostsRepository) {
         this.scrapper = scrapper
         this.feedConfigurationRepository = feedConfigurationRepository
         this.postsRepository = postsRepository
-        this.usersRepository = usersRepository
     }
 
-    async fetchPosts() {
+    async getCategories() {
         const configurations = await this.feedConfigurationRepository.getAll()
-        const posts = await this.postsRepository.findFromConfigurations(configurations.map(config => +config.feed_configuration_id))
-        return posts.reduce((acc, curr) => {
-            const categoryIndex = acc.findIndex(val => val.label === curr['configuration.label'])
-            if(categoryIndex > -1) {
-                acc[categoryIndex].posts = [...acc[categoryIndex].posts, curr]
-            } else {
-                acc.push({label: curr['configuration.label'], posts: [curr]})
+
+        return configurations.reduce((acc, curr) => {
+            const categoryIndex = acc.findIndex(val => val.label === curr.label)
+            if(categoryIndex < 0)  {
+                acc.push({label: curr.label})
             }
             return acc
         }, [])
