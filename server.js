@@ -16,6 +16,9 @@ const usersRouter = require('./src/routes/api/users/users')
 const logger = require('./src/jobs/logger/logger')
 require('./src/models/db')
 
+const initCronJobs = require('./src/cron/index')
+initCronJobs()
+
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -39,6 +42,7 @@ app.use((req, res, next) => {
 
 require('./src/authentication/jwt')(passport)
 
+
 app.use('/api/auth', authRouter)
 app.use('/api/feed', feedRouter)
 app.use('/api/users', usersRouter)
@@ -52,7 +56,7 @@ app.get('/*', function (req, res) {
 app.use((err, req, res, _) => {
   let statusCode = err.httpCode || 400
   if (!(err instanceof BaseError)) {
-    logger.error({label: 'Unhandled error', err})
+    logger.error({label: 'Unhandled error', err: err.message})
     process.exit(1)
   }
   return res.status(statusCode).send(err)

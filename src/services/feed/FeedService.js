@@ -15,8 +15,9 @@ class FeedService {
         this.usersRepository = usersRepository
     }
 
-    async fetchPosts(userId) {
-        const configurations = await this.usersRepository.getConfigurations(userId)
+    async fetchPosts() {
+        const configurations = await this.feedConfigurationRepository.getAll()
+        console.log('configurations', configurations)
         const posts = await this.postsRepository.findFromConfigurations(configurations.map(config => +config.feed_configuration_id))
         return posts.reduce((acc, curr) => {
             const categoryIndex = acc.findIndex(val => val.label === curr['configuration.label'])

@@ -21,6 +21,7 @@ import Drawer from './components/navigation/drawer/Drawer'
 import AppBar from './components/navigation/appBar/AppBar'
 import { makeStyles, ThemeProvider } from '@material-ui/core'
 import {theme} from "./styles/theme";
+import {drawerItems} from "./components/navigation/drawer/items";
 
 if (localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken.split(' ')[1])
@@ -40,7 +41,8 @@ const useStyles = makeStyles({
 
 function App() {
   const {
-    feedback: { toast }
+    feedback: { toast },
+    auth: {isAuthenticated}
   } = useSelector(state => state)
   const [activeModal] = useModal()
   const classes = useStyles()
@@ -51,9 +53,9 @@ function App() {
       <Route
         path={'*'}
         render={({ location: { pathname } }) => {
-          return privateRoutes.filter(route => {
+          return drawerItems.filter(route => {
             return matchPath(pathname, route.path)?.isExact
-          }).length ? (
+          }).length && isAuthenticated ? (
             <Fragment>
               <AppBar />
               <Drawer />

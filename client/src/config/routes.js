@@ -7,12 +7,20 @@ import ScrapeConfigPage from '../pages/scrapeConfig/ScrapeConfigPage'
 import CreateScrapeConfigPage from "../pages/scrapeConfig/CreateScrapeConfigPage";
 import PostsPage from "../pages/posts/PostsPage";
 
-export const landingPageRoute = {
-  path: '/',
+export const homePageRoute = {
+  path: '/home',
   exact: true,
   name: 'Home',
   component: HomePage
 }
+
+export const landingPageRoute = {
+  path: '/',
+  exact: true,
+  name: '',
+  component: HomePage
+}
+
 export const scrapeConfigPage = {
   path: '/config',
   exact: true,
@@ -53,11 +61,11 @@ export const passwordResetRoute = {
   component: PasswordReset
 }
 
-export const publicRoutes = []
+export const publicRoutes = [landingPageRoute, categoryPageRoute]
 
-export const privateRoutes = [landingPageRoute, scrapeConfigPage, createScrapeConfigPage, categoryPageRoute]
+export const privateRoutes = [homePageRoute, scrapeConfigPage, createScrapeConfigPage]
 export const guestRoutes = [
   loginPageRoute,
   passwordResetRoute,
-  registerConfrimationRoute
+  registerConfrimationRoute,
 ]

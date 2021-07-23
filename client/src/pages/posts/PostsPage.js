@@ -5,6 +5,7 @@ import Post from "../../components/feed/post/Post";
 import {makeStyles} from "@material-ui/core";
 import {useParams} from "react-router";
 import {getCategories, setPosts} from "../home/services/actions";
+import PageHelmet from "../../components/seo/PageHelmet";
 
 const useStyles = makeStyles({
     posts: {
@@ -31,6 +32,7 @@ function PostsPage() {
 
     return (
         <MainContainer>
+            <PageHelmet title={category} />
             <div className={classes.posts}>
                 {posts.map(post => (
                     <Post key={post.title} {...post} />

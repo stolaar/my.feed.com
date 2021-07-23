@@ -54,17 +54,12 @@ class Scrapper {
     }
 
     async scrapeMultiple(configurations) {
-        const browser = await this.scrapper.launch({
-            executablePath: NODE_ENV === 'dev' ? undefined : CHROMIUM_PATH,
-            args: ['--no-sandbox'], // This was important. Can't remember why
-        })
-
-        const promises = configurations.map(configuration => this.scrape(browser, configuration))
-
-        const result = await Promise.all(promises)
-
-        await browser.close()
-        return result
+        const allPosts = []
+        for(let configuration of configurations) {
+            const {posts} = await this.scrapeWithCheerio(configuration)
+            allPosts.push(...posts)
+        }
+        return allPosts
     }
 
     async scrapeSingleConfiguration(configuration) {
@@ -92,8 +87,7 @@ class Scrapper {
                     let link = $(element).find(selectors.link).attr('href')
                     link = link ? new RegExp('(http|https)').test(link) ? link : uri + link : link
                     const article = {
-
-                        link
+                        link: link ? link.replace(/\/$/, "") : ''
                     }
                     list.push(article)
                 });

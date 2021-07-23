@@ -1,4 +1,4 @@
-const {FeedSelectors, FeedConfiguration, User} = require('../definitions/index')
+const {FeedSelectors, FeedConfiguration} = require('../definitions/index')
 
 class FeedConfigurationRepository {
     constructor(model = FeedConfiguration) {
@@ -28,6 +28,16 @@ class FeedConfigurationRepository {
             model: FeedSelectors,
                 as: 'selectors'
             }})
+    }
+
+    async getAll() {
+        return this.model.findAll({
+            include: {
+                model: FeedSelectors,
+                as: 'selectors'
+            }
+
+        })
     }
 }
 

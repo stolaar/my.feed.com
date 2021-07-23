@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getCategories} from "./services/actions";
 import {makeStyles} from "@material-ui/core";
 import Category from "../../components/feed/category/Category";
+import PageHelmet from "../../components/seo/PageHelmet";
 
 const useStyles = makeStyles({
     posts: {
@@ -24,6 +25,7 @@ function HomePage() {
 
   return (
     <MainContainer>
+        <PageHelmet title={'My feed'} />
       <div className={classes.posts}>
         {categories.map(post => (
           <Category key={post.title} {...post} />

@@ -77,7 +77,7 @@ class UserRepository {
                 where: {
                     feed_configuration_id: config.feed_configuration_id
                 },
-                attributes: [[Sequelize.fn('max', Sequelize.col('updated_at')), 'max']],
+                attributes: [[Sequelize.fn('max', Sequelize.col('fetched_at')), 'max']],
                 raw: true
             })
 

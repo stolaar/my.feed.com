@@ -23,6 +23,9 @@ const Post = db.define("posts", {
         },
         link: {
             type: Sequelize.TEXT
+        },
+        fetched_at: {
+            type: Sequelize.TIME
         }
     },
     {

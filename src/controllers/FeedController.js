@@ -9,8 +9,7 @@ class AuthController extends BaseController {
 
     async getPosts(req, res, next) {
         try {
-            const {user: {id}} = req
-            const posts = await this.feedService.fetchPosts(id)
+            const posts = await this.feedService.fetchPosts()
             return res.status(200).send(posts)
         } catch (err) {
             next(err)

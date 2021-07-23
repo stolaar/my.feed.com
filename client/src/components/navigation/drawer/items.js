@@ -4,6 +4,7 @@ import {Add, Home, Settings} from "@material-ui/icons";
 export const drawerItems = [
     {
         ...landingPageRoute,
+        name: 'Home',
         icon: <Home/>
     },
     {

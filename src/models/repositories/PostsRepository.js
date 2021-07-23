@@ -1,4 +1,5 @@
 const { Post, FeedConfiguration } = require('../definitions/index')
+const removePostsDuplicates = require('../../services/transform/scrapper/removePostsDuplicates')
 
 class PostsRepository {
   constructor(model = Post) {
@@ -14,21 +15,16 @@ class PostsRepository {
   }
 
   async bulkCreate(posts) {
-    const result = await Post.findAll(
-      {
-        where: {
-          link: posts.map(post => post.link)
-        }
-      }
-    )
-    // TODO: update better than this!!
-    const promises = result.map(post => {
-        post.changed('updated_at', true)
-        return post.save()
-    })
-    await Promise.all(promises)
+    posts = removePostsDuplicates(posts)
+    const [, updatedPosts] = await Post.update({fetched_at: new Date()},
+        {
+          where: {
+            link: posts.map(post => post.link)
+          },
+          returning: true
+        })
 
-    return Post.bulkCreate(posts.filter(post => !result ? true : !result?.some(existingPost => existingPost.link === post.link)))
+    return Post.bulkCreate(posts.filter(post => !updatedPosts ? true : !updatedPosts?.some(existingPost => existingPost.link === post.link)))
   }
 
   async findFromConfigurations(configurationIds) {
