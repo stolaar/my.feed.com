@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import './App.css'
 import {
   landingPageRoute,
@@ -6,7 +6,7 @@ import {
   privateRoutes,
   guestRoutes
 } from './config/routes'
-import { Switch, Redirect, Route, matchPath } from 'react-router'
+import { Switch, Redirect, Route } from 'react-router'
 import { useSelector } from 'react-redux'
 import useModal from './hooks/useModal'
 import ToastMessage from './components/common/toast/ToastMessage'
@@ -17,11 +17,9 @@ import { getAccessToken, setCurrentUser } from './pages/auth/services/actions'
 import ProtectedRoute from './routes/ProtectedRoute'
 
 import GuestRoute from './routes/GuestRoute'
-import Drawer from './components/navigation/drawer/Drawer'
-import AppBar from './components/navigation/appBar/AppBar'
 import { makeStyles, ThemeProvider } from '@material-ui/core'
 import {theme} from "./styles/theme";
-import {drawerItems} from "./components/navigation/drawer/items";
+import AppNavigation from "./components/navigation/AppNavigation";
 
 if (localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken.split(' ')[1])
@@ -41,8 +39,7 @@ const useStyles = makeStyles({
 
 function App() {
   const {
-    feedback: { toast },
-    auth: {isAuthenticated}
+    feedback: { toast }
   } = useSelector(state => state)
   const [activeModal] = useModal()
   const classes = useStyles()
@@ -52,16 +49,7 @@ function App() {
     <div className={classes.root}>
       <Route
         path={'*'}
-        render={({ location: { pathname } }) => {
-          return drawerItems.filter(route => {
-            return matchPath(pathname, route.path)?.isExact
-          }).length && isAuthenticated ? (
-            <Fragment>
-              <AppBar />
-              <Drawer />
-            </Fragment>
-          ) : null
-        }}
+        component={AppNavigation}
       />
       {toast.show ? <ToastMessage {...toast} /> : null}
       {activeModal}

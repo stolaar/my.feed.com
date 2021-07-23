@@ -11,7 +11,6 @@ class NotificationsService {
     }
 
     async userRegistered(data) {
-        console.log('user registered')
         const template = loadTemplate(path.join(global.appRoot, 'src/templates/userRegistered.html'))
         const templateHTML = parseTemplate(template, data)
 

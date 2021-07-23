@@ -11,7 +11,6 @@ class UsersController extends BaseController {
         try {
             const {user: {id}} = req
             const configurations = await this.usersService.getConfigurations(id)
-            // console.log('configurations', configurations)
             return res.status(200).send(configurations)
         } catch (err) {
             console.error('err', err)

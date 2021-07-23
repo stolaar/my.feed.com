@@ -5,13 +5,10 @@ import Post from '../../components/feed/post/Post'
 import { makeStyles } from '@material-ui/core'
 import {useHistory, useLocation, useParams} from 'react-router'
 import PageHelmet from '../../components/seo/PageHelmet'
-import { setActiveTab } from '../../services/navigation/actions'
-import { getCategoryPosts } from './services/actions'
-import { getCategories } from '../home/services/actions'
+import {searchPosts} from './services/actions'
 import parseQueryString from '../../utils/parseQueryString'
 import Pagination from '../../components/pagination/Pagination'
 import buildQueryString from "../../utils/buildQueryString";
-import {categoryPageRoute} from "../../config/routes";
 
 const useStyles = makeStyles({
   posts: {
@@ -27,62 +24,51 @@ const useStyles = makeStyles({
     }
 })
 
-function PostsPage() {
+function SearchPage() {
   const dispatch = useDispatch()
-  const { isCategoriesFetch } = useSelector(state => state.feed)
-  const { posts, postsCount } = useSelector(state => state.posts)
-  const {
-    activeTab: { value: activeTab }
-  } = useSelector(state => state.navigation)
+  const { searchResults, searchResultsCount } = useSelector(state => state.posts)
+
   const classes = useStyles()
   const { category } = useParams()
-  const { search } = useLocation()
+  const { search: locationSearch } = useLocation()
   const history = useHistory()
   const [page, setPage] = useState(1)
+  const [search, setSearch] = useState('')
   const containerRef = useRef()
 
-  useEffect(() => {
-    dispatch(getCategoryPosts({ query: { page }, category }))
-
-    if (category !== activeTab) {
-      dispatch(setActiveTab(category))
-    }
-  }, [category, dispatch, activeTab, page])
-
-  useEffect(() => {
-    if (!isCategoriesFetch) {
-      dispatch(getCategories())
-    }
-  }, [dispatch, isCategoriesFetch])
-
     useEffect(() => {
-        const {page = 1} = parseQueryString(search)
+        const {page = 1, search: searchString = ''} = parseQueryString(locationSearch)
         setPage(+page)
-    }, [search])
+        setSearch(searchString)
+    }, [locationSearch])
 
 
     useEffect(() => {
         containerRef?.current?.scrollIntoView({behavior: 'smooth'})
-    }, [posts, containerRef])
+    }, [searchResults, containerRef])
 
    const onPaginationChange = (e, value) => {
-     const queryString = buildQueryString({page: value})
+     const queryString = buildQueryString({page: value, search})
      history.push({search: queryString})
    }
+
+   useEffect(() => {
+       dispatch(searchPosts({page, search}))
+   }, [dispatch, page, search])
 
   return (
     <MainContainer containerRef={containerRef}>
       <PageHelmet title={category} />
       <div className={classes.posts}>
-        {posts.map((post, index) => (
+        {searchResults.map((post, index) => (
           <Post key={index} {...post} />
         ))}
       </div>
       <div className={classes.pagination}>
-        <Pagination page={page} count={postsCount} onChange={onPaginationChange} />
+        <Pagination page={page} count={searchResultsCount} onChange={onPaginationChange} />
       </div>
     </MainContainer>
   )
 }
 
-export default PostsPage
+export default SearchPage

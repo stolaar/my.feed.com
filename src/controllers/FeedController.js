@@ -25,6 +25,26 @@ class AuthController extends BaseController {
             next(err)
         }
     }
+
+    async getCategoryPosts(req, res, next) {
+        try {
+            const {params: {category}, query} = req
+            const posts = await this.feedService.getCategoryPosts(category, query)
+            return res.status(200).send(posts)
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    async searchPosts(req, res, next) {
+        try {
+            const {query: {page = 1, search = ''}} = req
+            const posts = await this.feedService.searchPosts({page, search})
+            return res.status(200).send(posts)
+        } catch (err) {
+            next(err)
+        }
+    }
 }
 
 module.exports = AuthController

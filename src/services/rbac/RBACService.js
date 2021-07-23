@@ -31,7 +31,6 @@ class RBACService {
     }
 
     const userRoles = await this.getUserRoles(userId);
-    console.log('userRoles', userRoles)
     for (let role of roles) {
       if (this.roles[role]) {
         if (userRoles) {

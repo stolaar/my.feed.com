@@ -16,7 +16,6 @@ const checkUploadPath = (req, res, next) => {
       } else {
         fs.mkdir(basePath, {recursive: true}, function (err) {
           if (err) {
-            console.log("Error in folder creation");
             throw new ErrorHandler(
               "FolderCreation",
               400,

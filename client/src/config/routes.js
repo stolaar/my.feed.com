@@ -6,6 +6,7 @@ import HomePage from '../pages/home/HomePage'
 import ScrapeConfigPage from '../pages/scrapeConfig/ScrapeConfigPage'
 import CreateScrapeConfigPage from "../pages/scrapeConfig/CreateScrapeConfigPage";
 import PostsPage from "../pages/posts/PostsPage";
+import SearchPage from "../pages/posts/SearchPage";
 
 export const homePageRoute = {
   path: '/home',
@@ -42,6 +43,13 @@ export const categoryPageRoute = {
   component: PostsPage
 }
 
+export const searchPageRoute = {
+  path: '/search',
+  exact: true,
+  name: 'Search results',
+  component: SearchPage
+}
+
 // UNCOMMENT IF YOU WANT TO HAVE SIGNUP
 // export const signUpPageRoute = { path: "/signup",exact: true, name: "Sign up", component: SignUpPage }
 export const loginPageRoute = {
@@ -61,7 +69,7 @@ export const passwordResetRoute = {
   component: PasswordReset
 }
 
-export const publicRoutes = [landingPageRoute, categoryPageRoute]
+export const publicRoutes = [landingPageRoute, categoryPageRoute, searchPageRoute]
 
 export const privateRoutes = [homePageRoute, scrapeConfigPage, createScrapeConfigPage]
 export const guestRoutes = [

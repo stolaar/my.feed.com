@@ -15,4 +15,14 @@ router.get('/', (req, res, next) => feedController.getPosts(req, res, next))
 // @access Private
 router.post('/scrape-posts', (req, res, next) => feedController.scrapePosts(req, res, next))
 
+// @route GET /api/feed/:category
+// @desc Get user posts
+// @access Public
+router.get('/search', (req, res, next) => feedController.searchPosts(req, res, next))
+
+// @route GET /api/feed/:category
+// @desc Get user posts
+// @access Public
+router.get('/:category', (req, res, next) => feedController.getCategoryPosts(req, res, next))
+
 module.exports = router

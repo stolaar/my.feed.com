@@ -26,8 +26,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         alignItems: 'center',
         padding: theme.spacing(0, 1),
-        // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
+        minHeight: 112,
         justifyContent: 'flex-end',
     }
 }))
@@ -36,7 +35,7 @@ function MainContainer(props) {
     const classes = useStyles()
     const {isDrawerOpen: open} = useSelector(state => state.navigation)
 
-    return <main className={clsx(classes.content, {
+    return <main ref={props.containerRef} className={clsx(classes.content, {
         [classes.contentShift]: open,
     })}>
         <div className={classes.drawerHeader} />
