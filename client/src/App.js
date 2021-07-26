@@ -20,6 +20,7 @@ import GuestRoute from './routes/GuestRoute'
 import { makeStyles, ThemeProvider } from '@material-ui/core'
 import {theme} from "./styles/theme";
 import AppNavigation from "./components/navigation/AppNavigation";
+import Loader from "./components/common/loader/Loader";
 
 if (localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken.split(' ')[1])
@@ -39,7 +40,7 @@ const useStyles = makeStyles({
 
 function App() {
   const {
-    feedback: { toast }
+    feedback: { toast, showSpinner }
   } = useSelector(state => state)
   const [activeModal] = useModal()
   const classes = useStyles()
@@ -52,6 +53,7 @@ function App() {
         component={AppNavigation}
       />
       {toast.show ? <ToastMessage {...toast} /> : null}
+      {showSpinner ? <Loader show={showSpinner}  /> : null}
       {activeModal}
 
       <Switch>
