@@ -57,6 +57,9 @@ class Scrapper {
         const allPosts = []
         for(let configuration of configurations) {
             const {posts} = await this.scrapeWithCheerio(configuration)
+            posts.forEach(post => {
+                post.feed_configuration_id = configuration.feed_configuration_id
+            })
             allPosts.push(...posts)
         }
         return allPosts
