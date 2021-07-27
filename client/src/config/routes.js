@@ -19,7 +19,7 @@ export const landingPageRoute = {
   path: '/',
   exact: true,
   name: '',
-  component: HomePage
+  component: PostsPage
 }
 
 export const scrapeConfigPage = {

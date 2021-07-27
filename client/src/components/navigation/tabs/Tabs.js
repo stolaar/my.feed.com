@@ -16,7 +16,8 @@ function Tabs() {
         history.push(`${pathname}/${value}`)
     }
 
-    return  <MaterialTabs value={value} onChange={handleChange}>
+    return  <MaterialTabs variant="scrollable"
+                          scrollButtons="off" value={value} onChange={handleChange}>
             {tabs.map(({label}, key) => {
                 return <Tab value={label} key={key} label={label} />
             })}

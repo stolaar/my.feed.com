@@ -129,7 +129,7 @@ function MainAppBar() {
 export default MainAppBar
 
 function displayTabs(pathname) {
-  return matchPath(pathname, categoryPageRoute.path) ? (
+  return matchPath(pathname, categoryPageRoute.path) || matchPath(pathname, landingPageRoute.path) ? (
     <Fragment>
       <Divider />
       <Tabs />

@@ -13,7 +13,7 @@ import ToastMessage from './components/common/toast/ToastMessage'
 import jwt_decode from 'jwt-decode'
 import setAuthToken from './utils/setAuthToken'
 import store from './store/store'
-import { getAccessToken, setCurrentUser } from './pages/auth/services/actions'
+import {logoutUser, setCurrentUser} from './pages/auth/services/actions'
 import ProtectedRoute from './routes/ProtectedRoute'
 
 import GuestRoute from './routes/GuestRoute'
@@ -26,7 +26,7 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken.split(' ')[1])
   setAuthToken(localStorage.jwtToken)
   if (decoded.exp && decoded.exp < Date.now() / 1000) {
-    store.dispatch(getAccessToken())
+    store.dispatch(logoutUser())
   } else {
     store.dispatch(setCurrentUser(decoded))
   }

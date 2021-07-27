@@ -49,9 +49,10 @@ function PostsPage() {
   const containerRef = useRef()
 
   useEffect(() => {
-    dispatch(getCategoryPosts({ query: { page }, category }))
+    if(activeTab) dispatch(getCategoryPosts({ query: { page }, category: activeTab }))
 
-    if (category !== activeTab) {
+    if ((category !== activeTab && activeTab && category)
+        || (!activeTab && category)) {
       dispatch(setActiveTab(category))
     }
   }, [category, dispatch, activeTab, page])

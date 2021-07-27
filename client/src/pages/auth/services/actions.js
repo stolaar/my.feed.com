@@ -78,7 +78,7 @@ export const getAccessToken = cb => async dispatch => {
   try {
     const {
       data: { accessToken }
-    } = await axios.get(get_access_token_api)
+    } = await axios.get(get_access_token_api.path)
     dispatch(authUserWithToken(accessToken))
     if (cb) dispatch(cb())
   } catch (err) {

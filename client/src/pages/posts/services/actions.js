@@ -2,7 +2,6 @@ import {setErrors} from "../../../services/errors/actions";
 import axios from "axios";
 import {SET_CATEGORY_POSTS, SET_CATEGORY_POSTS_FETCHED, SET_SEARCH_RESULTS} from "../../../config/actionTypes";
 import buildQueryString from "../../../utils/buildQueryString";
-import {setLoading} from "../../../store/actions/feedbackActions";
 
 export const getCategoryPosts = ({query = {page: 1}, category}) => async dispatch => {
     try {
