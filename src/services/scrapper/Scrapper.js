@@ -118,11 +118,11 @@ class Scrapper {
       for (let post of result) {
         if (post.link) {
           try {
-            const updatedPost = await this.fetchArticleMetadata(link)
+            const updatedPost = await this.fetchArticleMetadata(post.link)
             post = { ...post, ...updatedPost }
             validPosts.push(post)
           } catch (err) {
-            logger.error(err, post)
+            logger.error(err.message)
           }
         }
       }
@@ -137,10 +137,10 @@ class Scrapper {
         throw new BadRequest('Cannot get post meta')
     }
     const post = await new Promise((resolve, reject) => {
-      request(post.link, function (error, response, html) {
+      request(link, function (error, response, html) {
         if (error)
           return reject(
-            new BadRequest('Error requesting page ' + post.link, error.message)
+            new BadRequest('Error requesting page ' + link, error.message)
           )
         const $ = cheerio.load(html)
         const updatedPost = {
@@ -155,7 +155,7 @@ class Scrapper {
         return resolve(updatedPost)
       })
     })
-    if (this.invalidTitles.include(post.title)) {
+    if (this.invalidTitles.includes(post.title)) {
         return this.fetchArticleMetadata(link, --numOfTries)
     }
     return post
