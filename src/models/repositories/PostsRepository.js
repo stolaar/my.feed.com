@@ -47,7 +47,7 @@ class PostsRepository {
 
   async getCategoryPosts(category, query= {page: 1}) {
     const {count, rows} = await this.model.findAndCountAll({
-      order: [['fetched_at', 'DESC']],
+      order: [['created_at', 'DESC']],
       include: [
         {
         model: FeedConfiguration,
