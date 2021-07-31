@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import InputField from '../common/InputField'
-import Button from '../common/Button'
 import validateLogin from '../../validation/validateLogin'
 import useForm from '../../hooks/useForm'
 import { login } from '../../pages/auth/services/actions'
@@ -11,11 +10,21 @@ import { setActiveModal } from '../../store/actions/feedbackActions'
 import {
     password_reset_request_modal
   } from '../../config/modal_path'
+import {Button, makeStyles} from "@material-ui/core";
+
+const useStyles = makeStyles(theme => ({
+    button: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.common.white,
+
+    }
+}))
 
 const LoginForm = () => {
     const dispatch = useDispatch()
     const {errors} = useSelector(state => state)
     const [formErrors, setFormErrors] = useState({})
+    const classes = useStyles()
 
     const onSubmit = () => {
         const { errors, isValid } = validateLogin(values)
@@ -59,11 +68,12 @@ const LoginForm = () => {
             />
             <span className={AuthCss.resetPassword} onClick={onPasswordResetClickHandler}>Forgot password ?</span>
             <Button
-                className={CommonCss.submitBtn}
-                type="submit"
-                text="Login"
-            />
-            <div className={`dropdown-divider ${AuthCss.divider}`}/>
+                type={'submit'}
+                className={classes.button}
+                variant={'contained'}
+            >
+                Login
+            </Button>
         </form>
     )
 }

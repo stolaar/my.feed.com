@@ -13,7 +13,7 @@ import Pagination from '../../components/pagination/Pagination'
 import buildQueryString from '../../utils/buildQueryString'
 import Skeleton from '@material-ui/lab/Skeleton'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   posts: {
     display: 'flex',
     justifyContent: 'center',
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
     flexWrap: 'wrap',
     marginTop: '20px'
   }
-})
+}))
 
 function PostsPage() {
   const dispatch = useDispatch()

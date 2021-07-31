@@ -16,7 +16,11 @@ import feed from '../../../constants/feed'
 const useStyles = makeStyles(theme => ({
   root: {
     maxWidth: 345,
-    margin: 5
+    margin: 5,
+    backgroundColor: 'transparent',
+    color: theme.palette.common.white,
+    border: 'none',
+    boxShadow: 'none'
   },
   media: {
     maxHeight: 120,
@@ -45,6 +49,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '16px',
     // height: 60,
+    color: theme.palette.common.white,
     '& :hover': {
       textDecoration: 'none'
     }
@@ -55,7 +60,8 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flex: '0 1 100%',
-    minHeight: '100%'
+    minHeight: '100%',
+    color: theme.palette.common.white
   }
 }))
 
@@ -85,7 +91,6 @@ export default function Post({ title, image, label, description, link }) {
           />
           <CardContent className={classes.content}>
             <Typography
-              color={'textPrimary'}
               className={classes.title}
               gutterBottom
               variant="h5"
@@ -104,13 +109,6 @@ export default function Post({ title, image, label, description, link }) {
           </CardContent>
         </Link>
       </CardActionArea>
-      <CardActions>
-        <Link target="_blank" rel="noopener noreferrer" to={{ pathname: link }}>
-          <Button color={'primary'} size="small">
-            See More
-          </Button>
-        </Link>
-      </CardActions>
     </Card>
   )
 }

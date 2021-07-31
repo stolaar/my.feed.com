@@ -59,6 +59,7 @@ function AppBar() {
         <CssBaseline />
     <MaterialAppBar
         position="fixed"
+        color={'default'}
         className={clsx(classes.appBar, {
             [classes.appBarShift]: open,
         })}

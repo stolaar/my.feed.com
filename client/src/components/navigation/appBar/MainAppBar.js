@@ -9,7 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import Tabs from '../tabs/Tabs'
 import Divider from '@material-ui/core/Divider'
 import { matchPath, useHistory, useLocation } from 'react-router'
-import { categoryPageRoute, landingPageRoute } from '../../../config/routes'
+import {categoryPageRoute, homePageRoute, landingPageRoute} from '../../../config/routes'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -95,11 +95,11 @@ function MainAppBar() {
   return (
     <Fragment>
       <CssBaseline />
-      <AppBar position="fixed">
+      <AppBar position="fixed" color={'default'}>
         <Toolbar>
 
             <Typography className={classes.title} variant="h6" noWrap>
-              <Link to={landingPageRoute.path}>My feed</Link>
+              <Link to={landingPageRoute.path}>MYChan</Link>
             </Typography>
 
           <div className={classes.search}>
@@ -129,7 +129,8 @@ function MainAppBar() {
 export default MainAppBar
 
 function displayTabs(pathname) {
-  return matchPath(pathname, categoryPageRoute.path) || matchPath(pathname, landingPageRoute.path) ? (
+  return matchPath(pathname, categoryPageRoute.path)?.isExact
+  || matchPath(pathname, landingPageRoute.path)?.isExact || matchPath(pathname, homePageRoute.path)?.isExact ? (
     <Fragment>
       <Divider />
       <Tabs />

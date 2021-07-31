@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     flexShrink: 0
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerHeader: {
     display: 'flex',
@@ -39,13 +39,13 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 0
   },
   activeItem: {
-    backgroundColor: theme.palette?.primary.main,
     color: 'white',
+    backgroundColor: theme.palette?.grey[500],
     '&:hover': {
-      backgroundColor: theme.palette?.info.main,
+      backgroundColor: theme.palette?.grey[500],
     },
     '& svg': {
-      color: 'white',
+      color: theme.palette.common.white,
     }
   },
   nestedList: {

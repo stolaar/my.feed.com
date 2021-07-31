@@ -3,13 +3,28 @@ import { useSelector } from "react-redux"
 import { useHistory } from 'react-router-dom'
 import LoginForm from "../../components/auth/LoginForm"
 import { Container, Row, Col } from 'react-bootstrap'
-import classes from './SignUpPage/SignUpPage.module.css'
 import {
     landingPageRoute,}
     from '../../config/routes'
+import {makeStyles} from "@material-ui/core";
+
+const useStyles = makeStyles(theme => ({
+    root: {
+        backgroundColor: theme.palette.primary.dark,
+        minHeight: '100vh',
+        color: theme.palette.common.white,
+        '& *': {
+            color: theme.palette.common.white
+        }
+    },
+    divRow: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+}))
 
 function LoginPage() {
-
+    const classes = useStyles()
     const {
       auth: { isAuthenticated },
     } = useSelector(state => state)
@@ -20,7 +35,7 @@ function LoginPage() {
       }, [isAuthenticated, history])
 
     return (
-        <Container fluid className={classes.SignupPage}>
+        <Container fluid className={classes.root}>
             <div className='container-1600'>
                 <Row className={classes.divRow}>
                     <Col lg={4}>

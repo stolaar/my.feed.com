@@ -10,7 +10,12 @@ function AppNavigation({location: {pathname}}) {
     const {auth: {isAuthenticated}} = useSelector(state => state)
 
     return drawerItems
-        .filter(route => matchPath(pathname, route.path)?.isExact).length && isAuthenticated ? (
+        .map(route => {
+            let paths = [route.path]
+            if(route.pages) paths.push(...route.pages?.map(page => page.path))
+            return paths
+        }).flat()
+        .filter(route => matchPath(pathname, route)?.isExact).length && isAuthenticated ? (
         <Fragment>
             <AppBar />
             <Drawer />

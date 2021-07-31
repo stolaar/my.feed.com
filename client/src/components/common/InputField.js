@@ -19,32 +19,8 @@ const InputField = ({
         value={value}
         helperText={error}
         variant="outlined"
-            margin={'normal'}
+        margin={'normal'}
     /></div>
-    // return (
-    //
-    //     <div className={divClassName}>
-    //         {toastLinks?.showLinks ? <ToastSocialLinks message={toastLinks.message} /> : null}
-    //         { error ? (<div className='error-text'>{error}</div>) : null }
-    //         { labelValue ? <label className={labelClassName}>{labelValue}</label> : null }
-    //         <div className={divRelative}>
-    //         <input
-    //             className={`form-control ${inputClassName}`}
-    //             onChange={onChange}
-    //             type={type}
-    //             name={name}
-    //             value={value}
-    //             placeholder={placeholder}
-    //             ref={ref}
-    //             defaultValue={defaultValue}
-    //             disabled={disabled}
-    //             autoComplete={autocomplete}
-    //         />
-    //         { icon && <span className={spanIconClassName} onClick={onClickIcon}>{icon}</span> }
-    //         </div>
-    //     </div>
-    //
-    // )
 }
 
 InputField.defaultProps = {
