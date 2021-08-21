@@ -8,14 +8,9 @@ import {
     from '../../config/routes'
 import {makeStyles} from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     root: {
-        backgroundColor: theme.palette.primary.dark,
-        minHeight: '100vh',
-        color: theme.palette.common.white,
-        '& *': {
-            color: theme.palette.common.white
-        }
+        minHeight: '100vh'
     },
     divRow: {
         justifyContent: 'center',

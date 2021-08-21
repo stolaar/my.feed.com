@@ -10,21 +10,12 @@ import { setActiveModal } from '../../store/actions/feedbackActions'
 import {
     password_reset_request_modal
   } from '../../config/modal_path'
-import {Button, makeStyles} from "@material-ui/core";
-
-const useStyles = makeStyles(theme => ({
-    button: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.common.white,
-
-    }
-}))
+import {Button} from "@material-ui/core";
 
 const LoginForm = () => {
     const dispatch = useDispatch()
     const {errors} = useSelector(state => state)
     const [formErrors, setFormErrors] = useState({})
-    const classes = useStyles()
 
     const onSubmit = () => {
         const { errors, isValid } = validateLogin(values)
@@ -48,8 +39,6 @@ const LoginForm = () => {
         <form className={AuthCss.formAuth} onSubmit={handleSubmit}>
             <h1 className={CommonCss.titleForm}>Login</h1>
             <InputField
-                labelClassName={CommonCss.formLabel}
-                inputClassName={CommonCss.inputOne}
                 labelValue="Email"
                 name="email"
                 value={values.email}
@@ -57,8 +46,6 @@ const LoginForm = () => {
                 error={formErrors.email || errors.email}
             />
             <InputField
-                labelClassName={CommonCss.formLabel}
-                inputClassName={CommonCss.inputOne}
                 labelValue="Password"
                 name="password"
                 value={values.password}
@@ -69,7 +56,6 @@ const LoginForm = () => {
             <span className={AuthCss.resetPassword} onClick={onPasswordResetClickHandler}>Forgot password ?</span>
             <Button
                 type={'submit'}
-                className={classes.button}
                 variant={'contained'}
             >
                 Login
