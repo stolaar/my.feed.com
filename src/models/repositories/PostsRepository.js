@@ -87,6 +87,14 @@ class PostsRepository {
     })
     return { count: Math.ceil(count / this.pageSize), rows }
   }
+
+  removeOldPosts(date) {
+    return this.model.destroy({
+      where: {
+        created_at: {[Op.lt]: date}
+      }
+    })
+  }
 }
 
 module.exports = PostsRepository

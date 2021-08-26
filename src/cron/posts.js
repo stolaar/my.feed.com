@@ -14,10 +14,22 @@ async function fetchPosts() {
     }
 }
 
+async function removeOldPosts() {
+    logger.info('Removing old posts')
+    PostsRepository.removeOldPosts(new Date(new Date().setDate(new Date().getDate() - 5)).getTime())
+}
+
 module.exports = [
     {
         executeAt: '*/15 * * * *',
         handler: fetchPosts,
+        opts: {
+            scheduled: false
+        }
+    },
+    {
+        executeAt: "*/1 * * * *",
+        handler: removeOldPosts,
         opts: {
             scheduled: false
         }
