@@ -21,8 +21,8 @@ function Tabs() {
     return  <MaterialTabs variant="scrollable"
                           classes={{indicator: classes.indicator}}
                           scrollButtons="off" value={value} onChange={handleChange}>
-            {tabs.map(({label}, key) => {
-                return <Tab value={label} key={key} label={label} />
+            {tabs.map(({label, slug}, key) => {
+                return <Tab value={slug} key={key} label={label} />
             })}
         </MaterialTabs>
 }

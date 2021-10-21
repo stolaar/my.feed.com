@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ConfigCard({uri, label, selectors, lastScrapped, feed_configuration_id}) {
+export default function ConfigCard({uri, label, slug, selectors, lastScrapped, feed_configuration_id}) {
     const classes = useStyles();
     const dispatch = useDispatch()
     const {isScrapping} = useSelector(state => state.scrapeConfig)
@@ -62,7 +62,7 @@ export default function ConfigCard({uri, label, selectors, lastScrapped, feed_co
 
     const onEditHandler = (e) => {
         e.preventDefault()
-        dispatch(setConfig({uri, label, feed_configuration_id}))
+        dispatch(setConfig({uri, label, slug, feed_configuration_id}))
         dispatch(setSelectors(selectors))
         dispatch(setActiveModal(edit_configuration_modal))
     }
@@ -103,7 +103,7 @@ export default function ConfigCard({uri, label, selectors, lastScrapped, feed_co
                             <EditIcon fontSize="medium" />
                         </IconButton>
                     </div>
-                    <FeedSelectors configuration={{uri, label, selectors}} />
+                    <FeedSelectors configuration={{uri, label, slug, selectors}} />
                 </AccordionDetails>
             </Accordion>
         </div>

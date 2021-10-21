@@ -63,7 +63,7 @@ class PostsRepository {
           as: 'configuration',
           required: true,
           where: {
-            label: category
+            slug: category
           }
         }
       ],

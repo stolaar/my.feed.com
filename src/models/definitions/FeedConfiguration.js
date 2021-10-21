@@ -16,6 +16,9 @@ const FeedConfiguration = db.define("feed_configuration", {
         },
         feed_selectors_id: {
             type: Sequelize.INTEGER
+        },
+        slug: {
+            type: Sequelize.TEXT
         }
     },
     {

@@ -100,6 +100,7 @@ class UserRepository {
 
             const configuration = await FeedConfiguration.create({
                 uri: body.uri,
+                slug: body.slug,
                 label: body.label,
                 feed_selectors_id: selectors.feed_selectors_id
             }, {transaction: t})

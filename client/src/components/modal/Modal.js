@@ -9,8 +9,8 @@ function Modal({ close, show, className, ...props }) {
   useEffect(() => {
 
     const onKeyPressed = e => e.code === 'Escape' && typeof close === 'function' ? close() : null
-    
-    
+
+
     document.addEventListener('keydown', onKeyPressed, false)
     return () => {
       document.removeEventListener('keydown', onKeyPressed, false)
@@ -29,6 +29,7 @@ function Modal({ close, show, className, ...props }) {
       {<div
         ref={modalRef}
         style={{
+          backgroundColor: '#424242',
           transform: show ? 'translateY(0)' : 'translateY(-100vh)',
           opacity: show ? '1' : '0',
           visibility: show ? 'visible' : 'hidden',

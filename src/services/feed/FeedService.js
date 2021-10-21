@@ -18,7 +18,7 @@ class FeedService {
         return configurations.reduce((acc, curr) => {
             const categoryIndex = acc.findIndex(val => val.label === curr.label)
             if(categoryIndex < 0)  {
-                acc.push({label: curr.label})
+                acc.push({label: curr.label, slug: curr.slug})
             }
             return acc
         }, [])

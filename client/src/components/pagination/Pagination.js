@@ -24,7 +24,6 @@ function Pagination({page,count, onChange}) {
     return <MaterialPagination className={classes.root}
                                page={page}
                                count={count}
-                               color="default"
                                onChange={onChange}
                                renderItem={(item)=> <PaginationItem {...item}
                                className={classes.item}

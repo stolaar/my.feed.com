@@ -17,7 +17,8 @@ import {
     Assignment,
     Title, Description,
     Image,
-    Link
+    Link,
+    ImportContacts as SlugIcon
 } from '@material-ui/icons'
 import Tooltip from "@material-ui/core/Tooltip";
 
@@ -58,6 +59,13 @@ export default function FeedSelectors({
           <WebIcon />
         </ListItemIcon>
         <ListItemText primary={configuration?.uri} />
+      </ListItem>
+      <ListItem button>
+          <ListItemIcon>
+              <SlugIcon />
+          </ListItemIcon>
+          Slug:
+          <ListItemText primary={configuration?.slug} />
       </ListItem>
       <ListItem button>
         <ListItemIcon>

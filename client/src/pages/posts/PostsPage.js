@@ -12,6 +12,8 @@ import parseQueryString from '../../utils/parseQueryString'
 import Pagination from '../../components/pagination/Pagination'
 import buildQueryString from '../../utils/buildQueryString'
 import Skeleton from '@material-ui/lab/Skeleton'
+import NoResultsImage from '../../assets/no_posts.svg'
+import isEmpty from 'lodash.isempty'
 
 const useStyles = makeStyles(theme => ({
   posts: {
@@ -81,7 +83,7 @@ function PostsPage() {
     <MainContainer containerRef={containerRef}>
       <PageHelmet title={category} />
       <div className={classes.posts}>
-        {isCategoryPostsFetch ? (
+        {isCategoryPostsFetch ? isEmpty(posts) ? <NoResults />  : (
           posts.map(post => <Post key={post.post_id} {...post} />)
         ) : (
           <PostsSkeleton />
@@ -111,4 +113,9 @@ function PostsSkeleton() {
       </div>
     </Fragment>
   ))
+}
+
+
+function NoResults() {
+  return <img src={NoResultsImage} alt=""/>
 }

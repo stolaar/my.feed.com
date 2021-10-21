@@ -53,6 +53,12 @@ function ConfigForm({ onSubmit }) {
         value={configuration.uri}
       />
       <InputField
+          labelValue={'Slug'}
+          name={'slug'}
+          onChange={onConfigChange}
+          value={configuration.slug}
+      />
+      <InputField
         labelValue={'Label'}
         name={'label'}
         onChange={onConfigChange}

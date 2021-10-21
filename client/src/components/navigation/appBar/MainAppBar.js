@@ -99,7 +99,7 @@ function MainAppBar() {
         <Toolbar>
 
             <Typography className={classes.title} variant="h6" noWrap>
-              <Link to={landingPageRoute.path}>MYChan</Link>
+              <Link to={landingPageRoute.path}>FEED</Link>
             </Typography>
 
           <div className={classes.search}>
