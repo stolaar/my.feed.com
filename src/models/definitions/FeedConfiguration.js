@@ -19,6 +19,10 @@ const FeedConfiguration = db.define("feed_configuration", {
         },
         slug: {
             type: Sequelize.TEXT
+        },
+        is_frontend_app: {
+            type: Sequelize.BOOLEAN,
+            default: false
         }
     },
     {

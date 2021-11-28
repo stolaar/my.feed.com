@@ -5,6 +5,8 @@ const FeedSelectors = require('./FeedSelectors')
 const UserRoles = require('./UserRoles')
 const UserConfiguration = require('./UserConfiguration')
 const Post = require('./Post')
+const Stories = require('./Stories')
+const StoryPosts = require('./StoryPosts')
 
 Tokens.belongsTo(User, {foreignKey: 'user_id'})
 User.hasMany(Tokens, {as: 'tokens', foreignKey: 'user_id'})
@@ -32,6 +34,8 @@ User.belongsToMany(FeedConfiguration, {
 
 Post.belongsTo(FeedConfiguration, {foreignKey: 'feed_configuration_id', as: 'configuration'})
 FeedConfiguration.hasMany(Post, {as: 'posts', foreignKey: 'feed_configuration_id'})
+Post.belongsTo(Stories, { through: StoryPosts, as: 'posts', foreignKey: 'post_id' })
+
 
 module.exports = {
     User,
@@ -40,5 +44,7 @@ module.exports = {
     FeedSelectors,
     UserRoles,
     UserConfiguration,
-    Post
+    Post,
+    Stories,
+    StoryPosts
 }

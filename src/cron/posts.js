@@ -20,18 +20,18 @@ async function removeOldPosts() {
 }
 
 module.exports = [
-    {
-        executeAt: '*/15 * * * *',
-        handler: fetchPosts,
-        opts: {
-            scheduled: false
-        }
-    },
-    {
-        executeAt: "*/1 * * * *",
-        handler: removeOldPosts,
-        opts: {
-            scheduled: false
-        }
-    }
+    // {
+    //     executeAt: '*/15 * * * *',
+    //     handler: fetchPosts,
+    //     opts: {
+    //         scheduled: false
+    //     }
+    // },
+    // {
+    //     executeAt: "*/1 * * * *",
+    //     handler: removeOldPosts,
+    //     opts: {
+    //         scheduled: false
+    //     }
+    // }
 ]

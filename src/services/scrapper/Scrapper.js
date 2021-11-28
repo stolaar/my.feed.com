@@ -2,16 +2,22 @@ const BadRequest = require('../../errors/BadRequest')
 const logger = require('../../jobs/logger/logger')
 const cheerio = require('cheerio')
 const request = require('request')
+const puppeteer = require('puppeteer')
+const {NODE_ENV, CHROMIUM_PATH = '/usr/bin/chromium-browser'} = process.env
 
 class Scrapper {
   constructor() {
-    this.invalidTitles = ['Just a moment...', 'Please Wait... | Cloudflare', 'Please Wait...']
+    this.invalidTitles = ['Just a moment...', 'Please Wait... | Cloudflare', 'Please Wait...', 'Error ']
+    this.browser = null
   }
 
   async scrapeMultiple(configurations) {
     const allPosts = []
     for (let configuration of configurations) {
-      const { posts } = await this.scrapeWithCheerio(configuration)
+      const { posts } =  await (configuration.is_frontend_app
+          ? this.scrapeWithPuppeteer(configuration)
+          : this.scrapeWithCheerio(configuration))
+
       posts.forEach(post => {
         post.feed_configuration_id = configuration.feed_configuration_id
       })
@@ -87,6 +93,62 @@ class Scrapper {
         return this.fetchArticleMetadata(link, --numOfTries)
     }
     return post
+  }
+
+  async scrapeWithPuppeteer({ uri, selectors, label, feed_configuration_id }) {
+    if(!this.browser) {
+        this.browser = await puppeteer.launch({
+          executablePath: NODE_ENV === 'development' ? undefined : CHROMIUM_PATH,
+          args: ['--no-sandbox'],
+        })
+    }
+    try {
+      const page = await this.browser.newPage()
+      await page.goto(uri, {waitUntil: 'load', timeout: 0})
+      await page.waitForSelector(selectors.wrapper)
+
+      let posts = await page.$$eval(selectors.article, (cluster, selectors, uri) => {
+        cluster = cluster.map(el => {
+              const imageSRC = el.querySelector(selectors.image)?.src
+              const image = imageSRC ? new RegExp('(http|https)').test(imageSRC) ? imageSRC : `${uri}/${imageSRC}` : ''
+
+              return {
+                title: el.querySelector(selectors.title)?.textContent,
+                description: el.querySelector(selectors.description)?.textContent,
+                link: el.querySelector(selectors.link)?.href,
+                image
+              }
+            })
+        return JSON.stringify(cluster, null, 2);
+      }, selectors, uri);
+
+      const postsObject = JSON.parse(posts)
+      const filteredPosts = Object.keys(postsObject).filter(key => postsObject[key].link).map(key => postsObject[key])
+
+      for (let post of filteredPosts) {
+        const page = await this.browser.newPage()
+        await page.goto(post.link, {waitUntil: 'load', timeout: 0})
+        try {
+          await page.waitForSelector(selectors.wrapper)
+        } catch (_) {
+          logger.error('error waiting for selector')
+        }
+        try {
+          page.title = await page.$eval('title', element => element.content)
+          page.description = await page.$eval(selectors.description, element => element.content)
+          console.log('desc', page.description)
+          post.image = await page.$eval('meta[property="twitter:image"]', element => element.content)
+        } catch (_) {
+          page.close()
+        }
+        await page.close()
+      }
+
+      return {label, uri, feed_configuration_id, posts: filteredPosts}
+    } catch (err) {
+        this.browser.close()
+        logger.error(err.message)
+      }
   }
 }
 

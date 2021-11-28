@@ -17,6 +17,7 @@ import { ExitToApp } from '@material-ui/icons'
 import { matchPath, useHistory, useLocation } from 'react-router'
 import { logoutUser } from '../../../pages/auth/services/actions'
 import clsx from 'clsx'
+import {Link} from "@material-ui/core";
 
 function Drawer() {
   const classes = useStyles()
@@ -106,7 +107,9 @@ function RenderListItem({list = []}) {
                         })}
                     >
                         <ListItemIcon>{icon}</ListItemIcon>
-                        <ListItemText primary={text}/>
+                        <Link href={path} className={classes.drawerLink}>
+                            <ListItemText primary={text} />
+                        </Link>
                     </ListItem>
                     {isExanded ? <List className={classes.nestedList}>
                         <RenderListItem list={pages} />

@@ -13,7 +13,7 @@ const db = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, {
         idle: dbConfig.pool.idle
     },
     logging:  process.env.NODE_ENV === 'development'
-        ? (msg) => logger.debug(msg)
+        ? false//(msg) => logger.debug(msg)
         : false
 });
 

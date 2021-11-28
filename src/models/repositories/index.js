@@ -3,6 +3,7 @@ const UserRepository = require('./UserRepository')
 const UserRolesRepository = require('./UserRolesRepository')
 const FeedConfigurationRepository = require('./FeedConfigurationRepository')
 const PostsRepository = require('./PostsRepository')
+const StoriesRepository = require('./StoriesRepository')
 
 const Token = require('../definitions/Tokens')
 const User = require('../definitions/User')
@@ -13,5 +14,6 @@ module.exports = {
     UserRepository: new UserRepository(User),
     UserRolesRepository: new UserRolesRepository(UserRoles),
     FeedConfigurationRepository: new FeedConfigurationRepository(),
-    PostsRepository: new PostsRepository()
+    PostsRepository: new PostsRepository(),
+    StoriesRepository: StoriesRepository.get()
 }

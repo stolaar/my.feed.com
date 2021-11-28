@@ -9,6 +9,12 @@ const useStyles = makeStyles(theme => ({
   drawerPaper: {
     width: drawerWidth,
   },
+  drawerLink: {
+    '&:hover': {
+      textDecoration: 'none',
+      color: 'inherit'
+    }
+  },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',

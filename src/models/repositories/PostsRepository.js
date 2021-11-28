@@ -31,10 +31,8 @@ class PostsRepository {
     return Post.bulkCreate(
       posts.filter(post =>
         !updatedPosts
-          ? true
-          : !updatedPosts?.some(existingPost => existingPost.link === post.link)
-      )
-    )
+            ? true
+            : !updatedPosts?.some(existingPost => existingPost.link === post.link), { returning: true }))
   }
 
   async findFromConfigurations(configurationIds) {

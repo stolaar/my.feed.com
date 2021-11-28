@@ -64,14 +64,19 @@ export default function FeedSelectors({
           <ListItemIcon>
               <SlugIcon />
           </ListItemIcon>
-          Slug:
-          <ListItemText primary={configuration?.slug} />
+          <ListItemText primary={`Slug: ${configuration?.slug}`} />
       </ListItem>
       <ListItem button>
         <ListItemIcon>
           <LabelImportant />
         </ListItemIcon>
         <ListItemText primary={configuration?.label} />
+      </ListItem>
+      <ListItem button>
+          <ListItemIcon>
+              <LabelImportant />
+          </ListItemIcon>
+          <ListItemText primary={`Front-end app: ${configuration?.is_frontend_app ? "YES" : "NO"}`}  />
       </ListItem>
       <ListItem button onClick={handleClick}>
         <ListItemIcon>

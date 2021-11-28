@@ -18,12 +18,14 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: 'transparent',
     color: theme.palette.common.white,
     border: 'none',
-    boxShadow: 'none'
+    boxShadow: 'none',
+    minWidth: 270
   },
   media: {
-    maxHeight: 120,
+    maxHeight: 240,
     minWidth: '100%',
-    objectFit: 'contain'
+    width: '100%',
+    objectFit: 'cover'
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -53,8 +55,10 @@ const useStyles = makeStyles(theme => ({
     }
   },
   actionsContainer: {
-     flex: 0,
-     maxHeight: '100%'
+    flex: '0 1 100%',
+    maxHeight: '100%',
+    height: '100%',
+    width: '100%'
   },
   content: {
     flex: '0 1 100%',
@@ -68,24 +72,30 @@ export default function Post({ title, image, label, description, link }) {
   const [postImage, setImage] = useState(image)
 
   useEffect(() => {
-    if (image) setImage(image)
+    const fetch = async () => {
+      const url = await fetchImage(image)
+      setImage(url)
+    }
+    if (image) {
+      new RegExp('(.jpg|.jpeg|.png)$').test(image) ? setImage(image) : fetch().catch(console.error)
+    }
     else setImage(feed.post.placeholder)
   }, [image])
 
-  const onImageError = () => {
+  const onImageError = (el, err) => {
     setImage(feed.post.placeholder)
   }
+
   return (
     <Card className={classes.root}>
       <CardActionArea className={classes.actionsContainer}>
         <Link target="_blank" rel="noopener noreferrer" to={{ pathname: link }}>
           <CardMedia
             component="img"
-            alt="Contemplative Reptile"
-            height="140"
+            alt=""
+            className={classes.media}
             onError={onImageError}
             image={postImage}
-            title="Contemplative Reptile"
           />
           <CardContent className={classes.content}>
             <Typography
@@ -109,4 +119,12 @@ export default function Post({ title, image, label, description, link }) {
       </CardActionArea>
     </Card>
   )
+}
+
+
+async function fetchImage(url) {
+  const data = await fetch(`/post-image?img=${url}`)
+  const blob = await data.blob()
+  const arrBuffer = await blob.arrayBuffer()
+  return URL.createObjectURL(new Blob([arrBuffer]))
 }

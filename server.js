@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 require('dotenv').config()
-
+const request = require('request')
 const PORT = process.env.PORT_NUMBER || 5000
 
 const bodyParser = require('body-parser')
@@ -48,6 +48,13 @@ app.use('/api/feed', feedRouter)
 app.use('/api/users', usersRouter)
 
 app.use(express.static(path.join(__dirname, 'client/build')))
+
+app.get('/post-image', async function (req, res) {
+  const { img, ...rest } = req.query
+  const url = new URL(img)
+  Object.keys(rest).forEach(key => url.searchParams.append(key, rest[key]))
+  request.get({url}).pipe(res)
+})
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'client/build/index.html'), function (err) {})

@@ -8,8 +8,10 @@ import FeedSelectors from "./FeedSelectors";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import { FileCopy as CopyIcon } from '@material-ui/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {
+    createConfig,
     deleteConfiguration,
     scrapeFromConfiguration,
     setConfig,
@@ -51,10 +53,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function ConfigCard({uri, label, slug, selectors, lastScrapped, feed_configuration_id}) {
+export default function ConfigCard({uri, label, slug, selectors, lastScrapped, feed_configuration_id, is_frontend_app}) {
     const classes = useStyles();
     const dispatch = useDispatch()
-    const {isScrapping} = useSelector(state => state.scrapeConfig)
+    const {isScrapping, configurations} = useSelector(state => state.scrapeConfig)
 
     const onDeleteHandler = () => {
         dispatch(deleteConfiguration(feed_configuration_id))
@@ -62,13 +64,21 @@ export default function ConfigCard({uri, label, slug, selectors, lastScrapped, f
 
     const onEditHandler = (e) => {
         e.preventDefault()
-        dispatch(setConfig({uri, label, slug, feed_configuration_id}))
+        dispatch(setConfig({uri, label, slug, is_frontend_app, feed_configuration_id}))
         dispatch(setSelectors(selectors))
         dispatch(setActiveModal(edit_configuration_modal))
     }
 
     const onScrapeHandler = () => {
         dispatch(scrapeFromConfiguration(feed_configuration_id))
+    }
+
+    const onDuplicateHandler = () => {
+        const configuration = configurations.find(config => config.feed_configuration_id === feed_configuration_id)
+        if(configuration) {
+            delete configuration.configuration_id
+            dispatch(createConfig(configuration))
+        }
     }
 
     return (
@@ -102,8 +112,11 @@ export default function ConfigCard({uri, label, slug, selectors, lastScrapped, f
                         <IconButton onClick={onEditHandler} className={classes.margin}>
                             <EditIcon fontSize="medium" />
                         </IconButton>
+                        <IconButton onClick={onDuplicateHandler} className={classes.margin}>
+                            <CopyIcon fontSize="medium" />
+                        </IconButton>
                     </div>
-                    <FeedSelectors configuration={{uri, label, slug, selectors}} />
+                    <FeedSelectors configuration={{uri, label, slug, is_frontend_app, selectors}} />
                 </AccordionDetails>
             </Accordion>
         </div>

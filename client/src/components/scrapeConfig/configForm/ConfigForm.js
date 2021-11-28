@@ -2,7 +2,7 @@ import React from 'react'
 import InputField from '../../common/InputField'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
-import { Button, makeStyles } from '@material-ui/core'
+import { Button, makeStyles, Switch, FormControlLabel } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setConfig,
@@ -34,6 +34,10 @@ function ConfigForm({ onSubmit }) {
     dispatch(setConfig({ ...configuration, [e.target.name]: e.target.value }))
   }
 
+    const onSwitchChange = e => {
+        dispatch(setConfig({ ...configuration, [e.target.name]: e.target.checked }))
+    }
+
   const onSelectorsChange = e => {
     e.persist()
     dispatch(
@@ -63,6 +67,11 @@ function ConfigForm({ onSubmit }) {
         name={'label'}
         onChange={onConfigChange}
         value={configuration.label}
+      />
+        <FormControlLabel
+          label="Is frontend app"
+          labelPlacement="start"
+          control={<Switch checked={!!configuration.is_frontend_app} onChange={onSwitchChange} name="is_frontend_app" />}
       />
       <Divider />
       <Typography
