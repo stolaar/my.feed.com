@@ -178,7 +178,7 @@ class Scrapper {
       }
       logger.info('WAIT FOR USERNAME SELECTOR')
       await page.waitForSelector('[name=\'username\']', { timeout: 1000 * 10 })
-      await page.type("[name='username']")
+      await page.type("[name='username']", process.env.INSTAGRAM_USER)
       await page.keyboard.down('Tab')
       await page.keyboard.type(process.env.INSTAGRAM_PWD)
       logger.info('CLICK LOGIN')
