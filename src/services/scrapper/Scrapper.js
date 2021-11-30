@@ -106,6 +106,13 @@ class Scrapper {
     try {
       const page = await this.browser.newPage()
       await page.goto(uri, {waitUntil: 'load', timeout: 0})
+
+      // TODO: REMOVE THIS! this is temporary solution for instagram
+      if(new RegExp('instagram.com').test(uri)) {
+          logger.info('LOG IN WITH INSTAGRAM')
+          await this.instagramLogin(page, uri, selectors.article)
+          logger.info('PASS THE LOGIN')
+      }
       await page.waitForSelector(selectors.wrapper)
 
       let posts = await page.$$eval(selectors.article, (cluster, selectors, uri) => {
@@ -149,7 +156,53 @@ class Scrapper {
     } catch (err) {
         this.browser.close()
         logger.error(err.message)
+        throw new BadRequest('No posts found!')
+    }
+  }
+
+  // TODO: Remove this hardcoded crap ASAP!
+  async instagramLogin(page, initialUrl, articleSelector) {
+    try {
+      await page.waitForSelector('main.SCxLW', { timeout: 1000 * 10 })
+      try {
+        logger.info('CHECK FOR LOGIN BUTTON')
+        const href = await page.evaluate(async () => {
+          return await new Promise((resolve, reject) => {
+            const a = document.querySelector('a.hUQXy')
+            return a ? resolve(a.href) : reject()
+          })
+        })
+        await page.goto(href)
+      } catch (err) {
+        logger.error('Login button not found')
       }
+      logger.info('WAIT FOR USERNAME SELECTOR')
+      await page.waitForSelector('[name=\'username\']', { timeout: 1000 * 10 })
+      await page.type("[name='username']")
+      await page.keyboard.down('Tab')
+      await page.keyboard.type(process.env.INSTAGRAM_PWD)
+      logger.info('CLICK LOGIN')
+
+      const value = await page.evaluate(async () => {
+        return await new Promise((fulfil) => {
+          const buttons = [...document.querySelectorAll('button')]
+          buttons.forEach(function (btn) {
+            if (btn.innerText === 'Log In') {
+              btn.click()
+              return fulfil(btn.innerText)
+            }
+          })
+          return fulfil()
+        })
+      })
+      logger.info('BUTTON CLICKED TEXT' + value)
+      await page.waitForSelector(articleSelector, { timeout: 1000 * 10 })
+    } catch (err) {
+      try {
+        await page.goto(initialUrl)
+      } catch (_) {}
+      logger.error(err.message)
+    }
   }
 }
 

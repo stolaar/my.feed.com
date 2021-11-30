@@ -26,6 +26,8 @@ services:
       - INIT_ADMIN_EMAIL
       - INIT_ADMIN_PASSWORD
       - NODE_ENV
+      - INSTAGRAM_USER
+      - INSTAGRAM_PWD
     restart: always
     ports:
       - "${PORT_NUMBER}:5000"

@@ -4,6 +4,8 @@ node {
         checkout scm
     }
     if (env.BRANCH_NAME == 'master' ) {
+        load "$JENKINS_HOME/.envvars/feed-master.groovy"
+
         withEnv(['PORT_NUMBER=5021',
                 'EMAIL_ADDRESS=test.nodejs43@gmail.com',
                 'EMAIL_PASSWORD=T94rAsQ4dErN3StV',
@@ -23,7 +25,9 @@ node {
                 "INIT_ADMIN_EMAIL=astolic@banzae.dev",
                 "INIT_ADMIN_PASSWORD=katakomba501!",
                 "BUILD_NUMBER=1",
-                "NODE_ENV=staging"
+                "NODE_ENV=staging",
+                "INSTAGRAM_USER=${env.INSTAGRAM_USER}",
+                "INSTAGRAM_PWD=${env.INSTAGRAM_PWD}"
                 ]) {
             stage('Build Docker Image') {
                 sh "echo GENERATE_SOURCEMAP=false >> ./client/.env"
