@@ -7,7 +7,7 @@ async function fetchPosts() {
     logger.info('FETCHING POSTS')
     const configurations = await FeedConfigurationRepository.getAll()
     try {
-        const posts = await scrapper.scrapeMultiple(configurations)
+        const posts = await scrapper.scrapeMultiple(configurations, true)
         await PostsRepository.bulkCreate(posts)
     } catch (err) {
         logger.error(err)

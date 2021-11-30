@@ -39,7 +39,7 @@
     "pg-hstore": "^2.3.4",
     "pg-promise": "^10.9.2",
     "postgres-migrations": "^5.1.1",
-    "puppeteer": "^11.0.0",
+    "puppeteer": "^10.1.0",
     "request": "^2.88.2",
     "sequelize": "^6.6.2",
     "string-similarity": "^4.0.4",

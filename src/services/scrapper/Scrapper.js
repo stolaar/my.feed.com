@@ -11,9 +11,10 @@ class Scrapper {
     this.browser = null
   }
 
-  async scrapeMultiple(configurations) {
+  async scrapeMultiple(configurations, skipFrontendApps = false) {
     const allPosts = []
     for (let configuration of configurations) {
+      if(skipFrontendApps) continue
       const { posts } =  await (configuration.is_frontend_app
           ? this.scrapeWithPuppeteer(configuration)
           : this.scrapeWithCheerio(configuration))
